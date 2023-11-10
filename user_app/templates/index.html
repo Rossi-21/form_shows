@@ -8,7 +8,22 @@
     <div class="form-group mt-5">
         <form method="POST">
             {% csrf_token %}
-            {{ form }}
+            {{ form.title.label_tag}}
+            {{ form.title }}
+            {{ form.title.errors }}
+
+            {{ form.network.label_tag }}
+            {{ form.network }}
+            {{ form.network.errors}}
+
+            {{ form.release_date.label_tag}}
+            {{ form.release_date }}
+            {{ form.release_date.errors}}
+
+            {{ form.description.label_tag}}
+            {{ form.description }}
+            {{ form.description.errors}}
+            
             <button class="btn btn-secondary mt-3" type="submit">Create</button>
         </form>
     </div>
