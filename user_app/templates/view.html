@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex align-items-center justify-content-between">
+        <h1>{{show.title}}</h1>
+        <a href="{% url  'allShows'%}">View Shows</a>
+    </div>
+    <strong>Network: </strong><p>{{show.network}}</p>
+    <strong>Release date: </strong><p>{{show.release_date}}</p>
+    <strong>Description: </strong><p>{{show.description}}</p>
+</div>
+{% endblock %}
