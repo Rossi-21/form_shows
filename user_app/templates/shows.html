@@ -20,12 +20,10 @@
                     <td><a href="/shows/{{show.id}}">{{show.title}}</a></td>
                     <td>{{show.network}}</td>
                     <td>{{show.release_date}}</td>
-                    <td><a href="/shows/{{show.id}}/edit">Edit</a> <a href="">Delete</a></td>
+                    <td><a href="/shows/{{show.id}}/edit">Edit</a> <a href="/shows/{{show.id}}/delete">Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
 </div>
-
-
 {% endblock %}

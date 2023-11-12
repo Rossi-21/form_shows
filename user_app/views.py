@@ -40,31 +40,33 @@ def allShows(request):
     }
     return render(request, "shows.html", context )
 
-def editShow(reqeust, id):
+def editShow(request, id):
 
     show = Show.objects.get(id=id)
-    
-    form = UpdateShowForm
+
+    form = CreateShowForm(instance=show)
+
+    if request.method == 'POST':
+
+        form = CreateShowForm(request.POST, instance=show)
+
+        if form.is_valid():
+
+            form.save()
+
+        return redirect(f'/shows/{show.id}', show)
 
     context ={
         'show' : show,
         'form' : form
     }
 
-    return render(reqeust, 'edit.html', context)
+    return render(request, 'edit.html', context)
 
-def updateShow(request, id):
-
+def deleteShow(reqeust, id):
+    
     show = Show.objects.get(id=id)
 
-    form = UpdateShowForm()
-
-    if request.method == 'POST':
-
-        form = UpdateShowForm(request.POST)
-
-        if form.is_valid:
-
-            form.save()
-
-        return redirect(f'/shows/{show.id}', show)
+    show.delete()
+    
+    return redirect('allShows')
