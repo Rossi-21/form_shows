@@ -2,6 +2,29 @@ from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 
+def registerUser(request):
+
+    form = CreateUserForm
+
+    if request.method == 'POST':
+
+        form = CreateShowForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('home')
+    
+    context = {
+        'form' : form
+    }
+    return render(request, 'register.html', context)
+
+
+
+
+
 def home(request):
 
     form = CreateShowForm()
