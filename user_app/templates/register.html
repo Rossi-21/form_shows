@@ -1,23 +1,25 @@
 {% extends 'main.html' %}
 {% block content  %}
-<h1>Register</h1>
+<div class="container">
+    <h1>Register</h1>
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.username.label_tag}}
+            {{ form.username }}
+            {{ form.username.errors }}
 
-<div class="form-group">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.username.label_tag}}
-        {{ form.username }}
-        {{ form.username.errors }}
-    
-        {{ form.password1.label_tag}}
-        {{ form.password1 }}
-        {{ form.password1.errors }}
-    
-        {{ form.password2.label_tag}}
-        {{ form.password2 }}
-        {{ form.password2.errors }}
-        <button class="btn btn-secondary mt-3" type="submit">Register</button>
-    </form>
+            {{ form.password1.label_tag}}
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+        
+            {{ form.password2.label_tag}}
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+            <button class="btn btn-secondary mt-3" type="submit">Register</button>
+        </form>
+    </div>
 </div>
+
 
 {% endblock %}
