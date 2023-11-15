@@ -1,28 +1,30 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+
 from .models import *
 from .forms import *
 
 def registerUser(request):
 
-    form = CreateUserForm
+    form = CreateUserForm()
 
     if request.method == 'POST':
 
-        form = CreateShowForm(request.POST)
+        form = CreateUserForm(request.POST)
 
         if form.is_valid():
 
-            form.save()
+            user = form.save()
 
-            return redirect('home')
+            login(request, user)
+
+            return redirect('allShows')
     
     context = {
         'form' : form
     }
+
     return render(request, 'register.html', context)
-
-
-
 
 
 def home(request):

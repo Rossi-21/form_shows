@@ -11,6 +11,9 @@ class CreateUserForm(UserCreationForm):
         self.fields['username'].widget.attrs.update({
             'class' : 'form-control',
             })
+        self.fields['email'].widget.attrs.update({
+            'class' : 'form-control'
+        })
         self.fields['password1'].widget.attrs.update({
             'class' : 'form-control',
             })
@@ -21,7 +24,7 @@ class CreateUserForm(UserCreationForm):
 
         model = User
 
-        fields = ['username', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
 
     
             
@@ -47,11 +50,11 @@ class CreateShowForm(forms.ModelForm):
         release_date = self.cleaned_data.get('release_date')
         description = self.cleaned_data.get('description')
 
-        if len(title) < 3:
+        if title and len(title) < 3:
             self._errors['title'] = self.error_class([
                 'Title must be at least 3 Characters'
             ])
-        if len(network) < 2:
+        if network and len(network) < 2:
             self._errors['network'] = self.error_class([
                 'Network must be at least 2 characters'
             ])
@@ -59,7 +62,7 @@ class CreateShowForm(forms.ModelForm):
             self._errors['release_date'] = self.error_class([
                 'Release date cannot be in the future'
             ])
-        if len(description) < 8:
+        if description and len(description) < 8:
             self._errors['description'] = self.error_class([
                 'Description must be at least 8 characters'
             ])
