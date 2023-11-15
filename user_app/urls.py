@@ -9,7 +9,7 @@ urlpatterns = [
     path('shows/<int:id>/edit/', views.editShow, name="editShow"),
     path('shows/<int:id>/delete/', views.deleteShow, name="deleteShow" ),
     path('register', views.registerUser, name="registerUser"),
-    #path('login', views.loginPage, name="login"),
-    #path('logout/', views.logoutUser, name="logout"),
+    path('login', views.loginUser, name="loginUser"),
+    path('logout/', views.logoutUser, name="logoutUser"),
 
 ]

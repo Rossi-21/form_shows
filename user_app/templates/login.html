@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Login</h1>
+    <div class="form-group">
+        <form action="" method="POST">
+            {% for message in messages %}
+                <p class="text-danger">{{message}}</p>
+            {% endfor %}
+            {% csrf_token %}
+            <label class="form-label" for="username">Username:</label>
+            <input class="form-control" type="text" name="username" id="username">
+            <label class="from-label" for="password">Password:</label>
+            <input class="form-control" type="password" name="password" id="password">
+            <button class="btn btn-secondary mt-3" type="submit">Login</button>
+            
+        </form>
+    </div>
+</div>
+
+    
+{% endblock %}
