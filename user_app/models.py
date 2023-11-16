@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Show(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     network = models.CharField(max_length=256)
     release_date = models.DateField()

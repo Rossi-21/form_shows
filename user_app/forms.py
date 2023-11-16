@@ -25,9 +25,6 @@ class CreateUserForm(UserCreationForm):
         model = User
 
         fields = ['username', 'email', 'password1', 'password2']
-
-    
-            
 class CreateShowForm(forms.ModelForm):
     class Meta:
 
@@ -39,7 +36,7 @@ class CreateShowForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class' : 'form-control mb-2'}),
             'network' : forms.TextInput(attrs={'class' : 'form-control mb-2'}),
             'release_date' : forms.DateInput(attrs={'type' :'date', 'class' : 'form-control mb-2'}),
-            'description' : forms.Textarea(attrs={'class': 'form-control'})
+            'description' : forms.Textarea(attrs={'class': 'form-control'}),
         }
 
     def clean(self):

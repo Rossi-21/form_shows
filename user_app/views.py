@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import *
@@ -56,6 +57,7 @@ def logoutUser(request):
 
     return redirect('loginUser')
 
+@login_required
 def home(request):
 
     form = CreateShowForm()
@@ -65,7 +67,8 @@ def home(request):
         form = CreateShowForm(request.POST)
 
         if form.is_valid():
-            
+            show = form.save(commit=False)
+            show.user = request.user
             form.save()
 
             return redirect('allShows')
@@ -76,6 +79,7 @@ def home(request):
 
     return render(request, "index.html", context)
 
+@login_required
 def viewShow(request, id):
 
     show = Show.objects.get(id=id)
@@ -85,6 +89,7 @@ def viewShow(request, id):
     }
     return render(request, 'view.html', context)
 
+@login_required
 def allShows(request):
 
     shows = Show.objects.all()
@@ -94,6 +99,7 @@ def allShows(request):
     }
     return render(request, "shows.html", context )
 
+@login_required
 def editShow(request, id):
 
     show = Show.objects.get(id=id)
@@ -117,6 +123,7 @@ def editShow(request, id):
 
     return render(request, 'edit.html', context)
 
+@login_required
 def deleteShow(reqeust, id):
     
     show = Show.objects.get(id=id)
