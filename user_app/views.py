@@ -51,6 +51,19 @@ def loginUser(request):
 
     return render(request, 'login.html', context)
 
+def showUser(request, id):
+
+    user = User.objects.get(id=id)
+
+    shows = Show.objects.filter(user=user)
+
+    context = {
+        'user' : user,
+        'shows' : shows
+    }
+
+    return render(request, "user.html", context)
+
 def logoutUser(request):
 
     logout(request)
