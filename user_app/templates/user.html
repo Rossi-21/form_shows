@@ -1,7 +1,20 @@
 {% extends 'main.html' %}
 {% block content %}
-    <h1>Hello {{user}}</h1>
-    {% for show in shows%}
-        <p>{{show.title}}</p>
-    {% endfor %}
+<div class="container mt-5">
+    <div class="d-flex align-items-center justify-content-between">
+        <h1>Hello {{user}}</h1>
+        <a href="{% url  'allShows'%}">View Shows</a>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <strong>My Shows</strong>
+        </div>
+        <ul class="list-group list-group-flush" >
+            {% for show in shows %}
+                <li class="list-group-item" >{{show.title}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+    
 {% endblock %}

@@ -51,6 +51,7 @@ def loginUser(request):
 
     return render(request, 'login.html', context)
 
+@login_required
 def showUser(request, id):
 
     user = User.objects.get(id=id)
@@ -102,15 +103,26 @@ def viewShow(request, id):
     }
     return render(request, 'view.html', context)
 
-@login_required
+@login_required      
 def allShows(request):
 
+    user = request.user
     shows = Show.objects.all()
 
     context = {
+        'user' : user,
         'shows' : shows,
     }
+
     return render(request, "shows.html", context )
+
+@login_required
+def likeShow(reqeust, id):
+    show = Show.objects.get(id=id)
+
+    show.like.add(reqeust.user)
+
+    return redirect('allShows')
 
 @login_required
 def editShow(request, id):

@@ -7,5 +7,7 @@ class Show(models.Model):
     network = models.CharField(max_length=256)
     release_date = models.DateField()
     description = models.TextField()
+    like = models.ManyToManyField(User, related_name='liked_shows', blank=True)
     created_at =  models.DateTimeField(auto_now_add=True, null = True)
     updated_at = models.DateTimeField(auto_now=True, null= True)
+

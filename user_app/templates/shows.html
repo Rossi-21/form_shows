@@ -14,6 +14,7 @@
             <th>Title</th>
             <th>Network</th>
             <th>Release Date</th>
+            <th>Likes</th>
             <th>Action</th>
         </thead>
             <tbody>
@@ -22,10 +23,19 @@
                     <td><a href="/shows/{{show.id}}">{{show.title}}</a></td>
                     <td>{{show.network}}</td>
                     <td>{{show.release_date}}</td>
+                    <td>{{show.like.count}}</td>
                     {% if request.user == show.user %}
-                        <td><a href="/shows/{{show.id}}/edit">Edit</a> <a href="/shows/{{show.id}}/delete">Delete</a></td>
+                        <td>
+                            <a href="/shows/{{show.id}}/edit"><button class="btn btn-warning">Edit</button></a> 
+                            <a href="/shows/{{show.id}}/delete"><button class="btn btn-danger">Delete</button></a>
+                        </td>
                     {% else %}
-                        <td></td>
+                        <td>
+                            <form action="{% url 'likeShow' show.id %}" method="POST">
+                                {% csrf_token %}
+                                <input class="btn btn-primary" type="submit" value="Like">
+                            </form>
+                        </td>
                     {% endif %}
                 </tr>
                 {% endfor %}
