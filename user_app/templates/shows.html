@@ -25,15 +25,19 @@
                     <td>{{show.release_date}}</td>
                     <td>{{show.like.count}}</td>
                     {% if request.user == show.user %}
-                        <td>
-                            <a href="/shows/{{show.id}}/edit"><button class="btn btn-warning">Edit</button></a> 
-                            <a href="/shows/{{show.id}}/delete"><button class="btn btn-danger">Delete</button></a>
+                        <td class="d-flex">
+                            <form action="{% url 'likeShow' show.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="image" src="/static/images/favorite.png">
+                            </form>
+                            <a href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a> 
+                            <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
                         </td>
                     {% else %}
                         <td>
                             <form action="{% url 'likeShow' show.id %}" method="POST">
                                 {% csrf_token %}
-                                <input class="btn btn-primary" type="submit" value="Like">
+                                <input class="" type="image" src="/static/images/favorite.png">
                             </form>
                         </td>
                     {% endif %}
