@@ -13,6 +13,14 @@
     <strong>Description: </strong><p>{{show.description}}</p>
     <strong>Likes: </strong><p>{{show.like.count}}</p>
     <strong>Added by: </strong><p>{{show.user}}</p>
-    <a href="/shows/{{show.id}}/edit">Edit</a>
+    {% if request.user == show.user %}
+        <a href="/shows/{{show.id}}/edit">Edit</a>
+    {% endif %}
+    <form class="form-group" action="{% url 'commentShow' show.id %}" method="POST">
+        {% csrf_token %}
+        <strong><label for="description">Comment:</label></strong>
+        <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
+        <button class="btn btn-secondary mt-3" type="submit">Comment</button>
+    </form>
 </div>
 {% endblock %}

@@ -118,11 +118,26 @@ def allShows(request):
 
 @login_required
 def likeShow(reqeust, id):
+    
     show = Show.objects.get(id=id)
 
     show.like.add(reqeust.user)
 
     return redirect('allShows')
+
+@login_required
+def commentShow(request, id):
+    
+    show = Show.objects.get(id=id)
+
+    description = request.POST.get('description')
+
+    new_comment = Comment.objects.create(description = description)
+
+    show.comment.add(new_comment)
+    print(new_comment)
+
+    return redirect(f'/shows/{show.id}')
 
 @login_required
 def editShow(request, id):
