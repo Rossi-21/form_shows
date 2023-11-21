@@ -171,3 +171,12 @@ def deleteShow(reqeust, id):
     show.delete()
     
     return redirect('allShows')
+
+@login_required
+def deleteComment(request, id):
+
+    comment = Comment.objects.get(id=id)
+
+    comment.delete()
+
+    return redirect(request.META.get('HTTP_REFERER', '/'))

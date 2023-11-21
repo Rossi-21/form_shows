@@ -23,8 +23,14 @@
         <button class="btn btn-secondary mt-3" type="submit">Comment</button>
     </form>
     {% for comment in comments %}
-        <strong>{{comment.user}}:</strong>
-        <p>{{comment.description}}</p>
+        <div class="d-flex">
+            <strong>{{comment.user}}:</strong>
+            <p>{{comment.description}}</p>
+            {% if request.user == comment.user %}
+                <a href="{% url 'deleteComment' comment.id %}"><img src="/static/images/delete.png" alt=""></a>
+            {% endif %}
+        </div>
+        
     {% endfor %}
 </div>
 {% endblock %}
