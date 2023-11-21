@@ -97,9 +97,22 @@ def home(request):
 def viewShow(request, id):
 
     show = Show.objects.get(id=id)
-    
+    comments = show.comment.all()
+
+    if request.method == 'POST':
+
+        user = request.user
+        show = Show.objects.get(id=id)
+        description = request.POST.get('description')
+
+        new_comment = Comment.objects.create(description = description, user = user)
+        show.comment.add(new_comment)
+
+        return redirect(f'/shows/{show.id}')
+
     context = {
-        'show' : show
+        'show' : show,
+        'comments' : comments
     }
     return render(request, 'view.html', context)
 
@@ -125,19 +138,6 @@ def likeShow(reqeust, id):
 
     return redirect('allShows')
 
-@login_required
-def commentShow(request, id):
-    
-    show = Show.objects.get(id=id)
-
-    description = request.POST.get('description')
-
-    new_comment = Comment.objects.create(description = description)
-
-    show.comment.add(new_comment)
-    print(new_comment)
-
-    return redirect(f'/shows/{show.id}')
 
 @login_required
 def editShow(request, id):

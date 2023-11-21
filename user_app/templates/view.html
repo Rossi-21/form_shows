@@ -16,11 +16,15 @@
     {% if request.user == show.user %}
         <a href="/shows/{{show.id}}/edit">Edit</a>
     {% endif %}
-    <form class="form-group" action="{% url 'commentShow' show.id %}" method="POST">
+    <form class="form-group" action="" method="POST">
         {% csrf_token %}
         <strong><label for="description">Comment:</label></strong>
-        <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
+        <textarea class="form-control" name="description" cols="15" rows="5"></textarea>
         <button class="btn btn-secondary mt-3" type="submit">Comment</button>
     </form>
+    {% for comment in comments %}
+        <strong>{{comment.user}}:</strong>
+        <p>{{comment.description}}</p>
+    {% endfor %}
 </div>
 {% endblock %}
