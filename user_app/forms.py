@@ -30,7 +30,7 @@ class CreateShowForm(forms.ModelForm):
 
         model = Show
 
-        fields = ('title', 'network', 'release_date', 'description')
+        fields = ('title', 'network', 'release_date', 'description', 'show_image')
 
         widgets = {
             'title': forms.TextInput(attrs={'class' : 'form-control mb-2'}),

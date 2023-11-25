@@ -13,6 +13,9 @@
     <strong>Description: </strong><p>{{show.description}}</p>
     <strong>Likes: </strong><p>{{show.like.count}}</p>
     <strong>Added by: </strong><p>{{show.user}}</p>
+    {% if show.show_image %}
+       <img src="{{ show.show_image.url }}" alt="" width="500"> 
+    {% endif %}
     {% if request.user == show.user %}
         <a href="/shows/{{show.id}}/edit">Edit</a>
     {% endif %}

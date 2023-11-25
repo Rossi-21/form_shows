@@ -78,7 +78,7 @@ def home(request):
 
     if request.method == 'POST':
 
-        form = CreateShowForm(request.POST)
+        form = CreateShowForm(request.POST, request.FILES)
 
         if form.is_valid():
             show = form.save(commit=False)

@@ -9,23 +9,27 @@
         </div>
     </div>
     <div class="form-group mt-5">
-        <form method="POST">
+        <form method="POST" action="" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.title.label_tag}}
+            {{ form.title.label_tag }}
             {{ form.title }}
             {{ form.title.errors }}
 
             {{ form.network.label_tag }}
             {{ form.network }}
-            {{ form.network.errors}}
+            {{ form.network.errors }}
 
             {{ form.release_date.label_tag}}
             {{ form.release_date }}
-            {{ form.release_date.errors}}
+            {{ form.release_date.errors }}
 
-            {{ form.description.label_tag}}
+            {{ form.description.label_tag }}
             {{ form.description }}
-            {{ form.description.errors}}
+            {{ form.description.errors }}
+
+            {{ form.show_image.label_tag}}
+            {{ form.show_image }}
+            {{ form.show_image.errors }}
             
             <button class="btn btn-secondary mt-3" type="submit">Create</button>
         </form>
