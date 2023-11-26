@@ -9,42 +9,33 @@
             <a href="{% url 'logoutUser' %}">logout</a> 
         </div>     
     </div>
-    <table class="table table-secondary">
-        <thead>
-            <th>Title</th>
-            <th>Network</th>
-            <th>Release Date</th>
-            <th>Likes</th>
-            <th>Action</th>
-        </thead>
-            <tbody>
-                {% for show in shows %}
-                <tr>
-                    <td><a href="/shows/{{show.id}}">{{show.title}}</a></td>
-                    <td>{{show.network}}</td>
-                    <td>{{show.release_date}}</td>
-                    <td>{{show.like.count}}</td>
-                    {% if request.user == show.user %}
-                        <td class="d-flex">
+    {% for show in shows %}
+        <div class="card" style="width: 25rem;">
+            {% if show.show_image %}
+                <img src="{{show.show_image.url}}"  alt="show image">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title"><a href="/shows/{{show.id}}">{{show.title}}</a></h5>
+                <p class="card-text">{{show.description}}</p>
+                {% if request.user == show.user %}
+                        <div class="d-flex">
                             <form action="{% url 'likeShow' show.id %}" method="POST">
                                 {% csrf_token %}
                                 <input type="image" src="/static/images/favorite.png">
                             </form>
                             <a href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a> 
                             <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
-                        </td>
+                        </div>
                     {% else %}
-                        <td>
+                        <div>
                             <form action="{% url 'likeShow' show.id %}" method="POST">
                                 {% csrf_token %}
                                 <input class="" type="image" src="/static/images/favorite.png">
                             </form>
-                        </td>
+                        </div>
                     {% endif %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{% url  'home'%}">Add a Show</a>
-</div>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
 {% endblock %}
