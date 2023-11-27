@@ -6,10 +6,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 
 class ProfilePicForm(forms.ModelForm):
-    profile_image = forms.ImageField(label = "Profile Picture")
     class Meta:
         model = Profile
         fields = ('profile_image',)
+        profile_image = forms.ImageField(label = "Profile Picture")
 
 
 class CreateUserForm(UserCreationForm):
