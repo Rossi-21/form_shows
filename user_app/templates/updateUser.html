@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% block content %}
+<h1>Update User</h1>
+<form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form.username.label_tag}}
+    {{ user_form.username }}
+    {{ user_form.username.errors }}
+
+    {{ user_form.email.label_tag }}
+    {{ user_form.email }}
+    {{ user_form.email.errors }}
+
+    {{ user_form.password1.label_tag}}
+    {{ user_form.password1 }}
+    {{ user_form.password1.errors }}
+
+    {{ user_form.password2.label_tag}}
+    {{ user_form.password2 }}
+    {{ user_form.password2.errors }}
+
+    {{profile_form.as_p}}
+
+    <button class="btn btn-secondary" type="submit">Update</button>
+</form>
+{% endblock %}

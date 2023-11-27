@@ -32,8 +32,7 @@
             {% if request.user == comment.user %}
                 <a href="{% url 'deleteComment' comment.id %}"><img src="/static/images/delete.png" alt=""></a>
             {% endif %}
-        </div>
-        
+        </div>  
     {% endfor %}
 </div>
 {% endblock %}

@@ -1,9 +1,16 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Show
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
+
+class ProfilePicForm(forms.ModelForm):
+    profile_image = forms.ImageField(label = "Profile Picture")
+    class Meta:
+        model = Profile
+        fields = ('profile_image',)
+
 
 class CreateUserForm(UserCreationForm):
     def __init__(self, *args, **kwargs):

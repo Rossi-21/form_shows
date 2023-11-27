@@ -6,7 +6,9 @@
         <h1>All of the Shows</h1>
         <div>
             <strong><a href="/user/{{request.user.id}}">{{request.user}}</a></strong>
+            <a href="{% url 'home' %}">Create</a>
             <a href="{% url 'logoutUser' %}">logout</a> 
+            
         </div>     
     </div>
     {% for show in shows %}

@@ -65,6 +65,31 @@ def showUser(request, id):
 
     return render(request, "user.html", context)
 
+@login_required
+def updateUser(request, id):
+
+    user = User.objects.get(id=id)
+    profile = Profile.objects.get(user__id=id)
+
+    user_form = CreateUserForm(instance=user)
+    profile_form = ProfilePicForm(instance=profile)
+
+    if request.method == 'POST':
+        user_form = CreateUserForm(request.POST or None, request.FILES, instance=user)
+        profile_form = ProfilePicForm(request.FILES, instance=profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+
+            return redirect('showUser')
+
+    context = {
+        'user_form' : user_form,
+        'profile_form' : profile_form
+    }
+    return render(request, "updateUser.html", context)
+
 def logoutUser(request):
 
     logout(request)
