@@ -5,12 +5,13 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     profile_image = models.ImageField(null=True, blank=True, upload_to="images/")
-    #follows = models.ManyToManyField(
-        #"self",
-        #related_name="followed_by",
-        #symmetrical=False,
-        #blank=True
-    #)
+    updated_at = updated_at = models.DateTimeField(auto_now=True, null= True)
+    follows = models.ManyToManyField(
+        "self",
+        related_name="followed_by",
+        symmetrical=False,
+        blank=True
+    )
 
     def __str__(self):
         return self.user.username

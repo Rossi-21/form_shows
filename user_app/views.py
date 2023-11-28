@@ -56,11 +56,14 @@ def loginUser(request):
 def showUser(request, id):
 
     user = User.objects.get(id=id)
+    
+    profile = Profile.objects.get(id=id)
 
     shows = Show.objects.filter(user=user)
 
     context = {
         'user' : user,
+        'profile' :profile,
         'shows' : shows
     }
 
@@ -70,7 +73,7 @@ def showUser(request, id):
 def updateUser(request, id):
 
     user = User.objects.get(id=id)
-    profile = Profile.objects.get(user__id=id)
+    profile = Profile.objects.get(id=id)
 
     user_form = CreateUserForm(instance=user)
     profile_form = ProfilePicForm(instance=profile)

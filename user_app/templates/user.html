@@ -15,6 +15,9 @@
             {% endfor %}
         </ul>
     </div>
+    {% if profile.profile_image %}
+        <img src="{{profile_image.url}}"  alt="show image">
+    {% endif %}
     <a href="{% url 'updateUser' user.id %}">Update Profile</a>
 </div>
 

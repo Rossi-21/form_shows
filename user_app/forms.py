@@ -9,6 +9,7 @@ class ProfilePicForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('profile_image',)
+        
         profile_image = forms.ImageField(label = "Profile Picture")
 
 
