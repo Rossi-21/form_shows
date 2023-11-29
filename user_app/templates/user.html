@@ -2,7 +2,13 @@
 {% block content %}
 <div class="container mt-5">
     <div class="d-flex align-items-center justify-content-between">
-        <h1>Hello {{user}}</h1>
+        <h1>
+            Hello {{user}}
+            {% if profile.profile_image %}
+                <img src="{{user.profile.profile_image.url}}"  alt="profile image">
+            {% endif %}
+        </h1>
+        
         <a href="{% url  'allShows'%}">View Shows</a>
     </div>
     <div class="card">
@@ -15,9 +21,7 @@
             {% endfor %}
         </ul>
     </div>
-    {% if profile.profile_image %}
-        <img src="{{profile_image.url}}"  alt="show image">
-    {% endif %}
+    
     <a href="{% url 'updateUser' user.id %}">Update Profile</a>
 </div>
 
