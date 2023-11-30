@@ -73,21 +73,21 @@ def showUser(request, id):
 def updateUser(request, id):
 
     user = User.objects.get(id=id)
-    profile = Profile.objects.get(id=id)
+    profile = Profile.objects.get(user__id=id)
 
     user_form = CreateUserForm(instance=user)
     profile_form = ProfilePicForm(instance=profile)
 
     if request.method == 'POST':
-        user_form = CreateUserForm(request.POST or None, request.FILES, instance=user)
-        profile_form = ProfilePicForm(request.FILES, instance=profile)
+        user_form = CreateUserForm(request.POST or None, request.FILES or None, instance=user)
+        profile_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             login(request, user)
 
-            return redirect('home')
+            return redirect(f'/user/{user.id}')
 
     context = {
         'user_form' : user_form,

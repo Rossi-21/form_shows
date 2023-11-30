@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     profile_image = models.ImageField(null=True, blank=True, upload_to="images/")
-    updated_at = updated_at = models.DateTimeField(auto_now=True, null= True)
+    updated_at = models.DateTimeField(auto_now=True, null= True)
     follows = models.ManyToManyField(
         "self",
         related_name="followed_by",
@@ -20,9 +20,10 @@ def create_profile(sender, instance, created, **kwargs):
     if created: 
         user_profile = Profile(user=instance)
         user_profile.save()
-        #user_profile.follows.set([instace.profile.id])
+        user_profile.follows.set([instance.profile.id])
+        user_profile.save()
 
-post_save.connect(create_profile,sender=User)
+post_save.connect(create_profile, sender=User)
 
 class Comment(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE )
