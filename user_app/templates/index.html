@@ -1,13 +1,8 @@
 {% extends 'main.html' %}
 {% block content %}
 <div class="container mt-5">
-    <div class="d-flex align-items-center justify-content-between">
-        <h1>Add a Show</h1>
-        <div>
-            <strong><a href="/user/{{request.user.id}}">{{request.user}}</a></strong>
-            <a href="{% url  'allShows'%}">View Shows</a>
-        </div>
-    </div>
+    {% include 'navbar.html' %}
+    {% include 'hero.html' %}
     <div class="form-group mt-5">
         <form method="POST" action="" enctype="multipart/form-data">
             {% csrf_token %}

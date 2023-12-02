@@ -1,43 +1,35 @@
 {% extends "main.html" %}
 {% block content %}
 
-<div class="container mt-5">
-    <div class="d-flex align-items-center justify-content-between">
-        <h1>All of the Shows</h1>
-        <div>
-            <strong><a href="/user/{{request.user.id}}">{{request.user}}</a></strong>
-            <a href="{% url 'home' %}">Create</a>
-            <a href="{% url 'logoutUser' %}">logout</a> 
-            
-        </div>     
-    </div>
-    {% for show in shows %}
-        <div class="card" style="width: 25rem;">
-            {% if show.show_image %}
-                <img src="{{show.show_image.url}}"  alt="show image">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title"><a href="/shows/{{show.id}}">{{show.title}}</a></h5>
-                <p class="card-text">{{show.description}}</p>
-                {% if request.user == show.user %}
-                        <div class="d-flex">
-                            <form action="{% url 'likeShow' show.id %}" method="POST">
-                                {% csrf_token %}
-                                <input type="image" src="/static/images/favorite.png">
-                            </form>
+{% include 'navbar.html' %}
+{% include 'hero.html' %}
+
+{% for show in shows %}
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4 ">
+                {% if show.show_image %}
+                    <img src="{{show.show_image.url}}" class="card-img" alt="show image">
+                {% endif %}
+                <div class="card-body">
+                    <div class="d-flex">
+                        <form action="{% url 'likeShow' show.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="image" src="/static/images/favorite.png">
+                        </form>
+                        {% if request.user == show.user %}
                             <a href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a> 
                             <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
-                        </div>
-                    {% else %}
-                        <div>
-                            <form action="{% url 'likeShow' show.id %}" method="POST">
-                                {% csrf_token %}
-                                <input class="" type="image" src="/static/images/favorite.png">
-                            </form>
-                        </div>
-                    {% endif %}
+                        {% endif %}
+                    </div>
+                    <h5 class="card-title">{{show.title}}</h5>
+                    <p class="card-text">{{show.description}}</p>    
+                </div>
             </div>
         </div>
-        <br>
-    {% endfor %}
+    </div>
+</div>           
+{%  endfor %}   
+
 {% endblock %}
