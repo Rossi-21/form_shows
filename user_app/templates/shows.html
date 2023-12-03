@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="card mb-4 ">
                 {% if show.show_image %}
-                    <img src="{{show.show_image.url}}" class="card-img" alt="show image">
+                    <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img" alt="show image"></a>
                 {% endif %}
                 <div class="card-body">
                     <div class="d-flex">
@@ -23,7 +23,7 @@
                             <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
                         {% endif %}
                     </div>
-                    <h5 class="card-title">{{show.title}}</h5>
+                    <a href="{% url 'viewShow' show.id %}"><h5 class="card-title">{{show.title}}</h5></a>
                     <p class="card-text">{{show.description}}</p>    
                 </div>
             </div>

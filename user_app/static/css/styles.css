@@ -11,6 +11,10 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.form-width, #btn-width{
+    width: 100%;
+}
+
 .navbar {
     background-color: #38a9ca;
 }

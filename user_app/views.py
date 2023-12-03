@@ -178,7 +178,7 @@ def editShow(request, id):
 
     if request.method == 'POST':
 
-        form = CreateShowForm(request.POST, instance=show)
+        form = CreateShowForm(request.POST or None, request.FILES or None, instance=show)
 
         if form.is_valid():
 
