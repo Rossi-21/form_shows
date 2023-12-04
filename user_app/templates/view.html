@@ -1,38 +1,56 @@
 {% extends 'main.html' %}
 {% block content %}
-<div class="container mt-5">
-    <div class="d-flex align-items-center justify-content-between">
-        <h1>{{show.title}}</h1>
-        <div>
-            <strong>{{request.user}}</strong>
-            <a href="{% url  'allShows'%}">View Shows</a>
-        </div> 
+{% include 'navbar.html' %}
+{% include 'hero.html' %}
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Show Card-->
+            <div class="card mb-4">
+                <div class="card-body position-relative">
+                    <h2 class="card-title">{{ show.title }}</h2>
+                    <p class="card-text"><strong>Network: </strong>{{ show.network }}</p>
+                    <p class="card-text"><strong>Release date: </strong>{{ show.release_date }}</p>
+                    <p class="card-text"><strong>Description: </strong>{{ show.description }}</p>
+                    <p class="card-text"><strong>Likes: </strong>{{ show.like.count }}</p>
+                    <p class="card-text"><strong>Added by: </strong>{{ show.user }}</p>
+                    <div class="d-flex flex-column">
+                        {% if show.show_image %}
+                            <img src="{{ show.show_image.url }}" alt="{{ show.network }}" class="img-fluid mb-3" width="200">
+                        {% endif %}
+                        {% if request.user == show.user %}
+                            <a href="/shows/{{ show.id }}/edit" class="btn btn-primary m-3">Edit</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- Comment Card -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <form class="form-group" action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="description"><strong>Comment:</strong></label>
+                            <textarea class="form-control" name="description" cols="15" rows="5"></textarea>
+                        </div>
+                        <button class="btn btn-secondary mt-3" type="submit">Comment</button>
+                    </form>
+                    {% for comment in comments %}
+                        <div class="media mt-3">
+                            <div class="media-body">
+                                <h5 class="mt-0">{{ comment.user }}</h5>
+                                <p>{{ comment.description }}</p>
+                                {% if request.user == comment.user %}
+                                    <a href="{% url 'deleteComment' comment.id %}">
+                                        <img src="/static/images/delete.png" alt="Delete">
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
-    <strong>Network: </strong><p>{{show.network}}</p>
-    <strong>Release date: </strong><p>{{show.release_date}}</p>
-    <strong>Description: </strong><p>{{show.description}}</p>
-    <strong>Likes: </strong><p>{{show.like.count}}</p>
-    <strong>Added by: </strong><p>{{show.user}}</p>
-    {% if show.show_image %}
-       <img src="{{ show.show_image.url }}" alt="" width="500"> 
-    {% endif %}
-    {% if request.user == show.user %}
-        <a href="/shows/{{show.id}}/edit">Edit</a>
-    {% endif %}
-    <form class="form-group" action="" method="POST">
-        {% csrf_token %}
-        <strong><label for="description">Comment:</label></strong>
-        <textarea class="form-control" name="description" cols="15" rows="5"></textarea>
-        <button class="btn btn-secondary mt-3" type="submit">Comment</button>
-    </form>
-    {% for comment in comments %}
-        <div class="d-flex">
-            <strong>{{comment.user}}:</strong>
-            <p>{{comment.description}}</p>
-            {% if request.user == comment.user %}
-                <a href="{% url 'deleteComment' comment.id %}"><img src="/static/images/delete.png" alt=""></a>
-            {% endif %}
-        </div>  
-    {% endfor %}
 </div>
 {% endblock %}
