@@ -1,28 +1,27 @@
 {% extends 'main.html' %}
 {% block content %}
-<div class="container mt-5">
-    <div class="d-flex align-items-center justify-content-between">
-        <h1>
-            Hello {{user}}
-            {% if profile.profile_image %}
-                <img src="{{user.profile.profile_image.url}}"  alt="profile image" height="35">
-            {% endif %}
-        </h1>
-        
-        <a href="{% url  'allShows'%}">View Shows</a>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <strong>My Shows</strong>
+{% include 'navbar.html' %}
+{% include 'hero.html' %}
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <strong>My Shows</strong>
+                </div>
+                <ul class="list-group list-group-flush" >
+                    {% for show in shows %}
+                        <li class="list-group-item d-flex align-items-center" >
+                            <a href="{% url 'viewShow' show.id %}">{{show.title}}</a>
+                            <span class="badge bg-primary rounded-pill">{{ show.like.count }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <a href="{% url 'updateUser' user.id %}">Update Profile</a>
         </div>
-        <ul class="list-group list-group-flush" >
-            {% for show in shows %}
-                <li class="list-group-item" ><a href="{% url 'viewShow' show.id %}">{{show.title}}</a></li>
-            {% endfor %}
-        </ul>
     </div>
-    
-    <a href="{% url 'updateUser' user.id %}">Update Profile</a>
 </div>
+
 
 {% endblock %}

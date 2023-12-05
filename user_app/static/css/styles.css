@@ -11,6 +11,10 @@ body {
     font-family: Arial, sans-serif;
 }
 
+span{
+    margin-left:1em;
+}
+
 .form-width, #btn-width{
     width: 100%;
 }
