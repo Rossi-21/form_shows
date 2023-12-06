@@ -14,12 +14,18 @@
                 {% endif %}
                 <div class="card-body">
                     <div class="d-flex">
-                        <form action="{% url 'likeShow' show.id %}" method="POST">
+                        <form action="{% url 'likeShow' show.id %}" method="POST" class="like-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="show_id" value="{{ show.id }}">
+                            <input type="image" src="/static/images/favorite.png" class="like-btn" data-show-id="{{ show.id }}">
+                        </form>
+                        {{ show.like.count }}
+                        <!-- <form action="{% url 'likeShow' show.id %}" method="POST">
                             {% csrf_token %}
                             <input type="image" src="/static/images/favorite.png">
-                        </form>
+                        </form> -->
                         {% if request.user == show.user %}
-                            <a href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a> 
+                           <span><a class="margin-left" href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a></span>  
                             <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
                         {% endif %}
                     </div>
@@ -31,5 +37,28 @@
     </div>
 </div>           
 {%  endfor %}   
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.like-btn').on('click', function(e) {
+            e.preventDefault();
+            const showId = $(this).data('show-id');
+            const form = $(this).closest('.like-form');
 
+            $.ajax({
+                type: 'POST',
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function(response) {
+                    // Update UI to show that the post is liked
+                    $(`.like-btn[data-show-id='${showId}']`).attr('src', '/static/images/liked.png');
+                    // You might want to update the count or perform other UI changes here.
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

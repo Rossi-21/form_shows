@@ -9,8 +9,7 @@
             {% if profile.profile_image %}
                 <li class="nav-item">
                     <img class="rounded-circle" src="{{user.profile.profile_image.url}}"  alt="profile image" height="35">
-                </li>
-                
+                </li>   
             {% endif %}
             <li class="nav-item active">
                 <a class="nav-link" href="/user/{{request.user.id}}">{{request.user}}</a>

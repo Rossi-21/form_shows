@@ -11,7 +11,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-span{
+span, .margin-left{
     margin-left:1em;
 }
 

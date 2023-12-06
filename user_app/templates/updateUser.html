@@ -1,26 +1,38 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1>Update User</h1>
-<form method="POST" action="" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ user_form.username.label_tag}}
-    {{ user_form.username }}
-    {{ user_form.username.errors }}
+{% include 'navbar.html' %}
+{% include 'hero.html' %}
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <strong>Update Profile</strong>
+                </div>
+                <form class="m-3" method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ user_form.username.label_tag}}
+                    {{ user_form.username }}
+                    {{ user_form.username.errors }}
 
-    {{ user_form.email.label_tag }}
-    {{ user_form.email }}
-    {{ user_form.email.errors }}
+                    {{ user_form.email.label_tag }}
+                    {{ user_form.email }}
+                    {{ user_form.email.errors }}
 
-    {{ user_form.password1.label_tag}}
-    {{ user_form.password1 }}
-    {{ user_form.password1.errors }}
+                    {{ user_form.password1.label_tag}}
+                    {{ user_form.password1 }}
+                    {{ user_form.password1.errors }}
 
-    {{ user_form.password2.label_tag}}
-    {{ user_form.password2 }}
-    {{ user_form.password2.errors }}
+                    {{ user_form.password2.label_tag}}
+                    {{ user_form.password2 }}
+                    {{ user_form.password2.errors }}
 
-    {{profile_form.as_p}}
+                    {{profile_form.as_p}}
 
-    <button class="btn btn-secondary" type="submit">Update</button>
-</form>
+                    <button class="btn btn-secondary" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
