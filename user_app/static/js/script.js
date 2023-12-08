@@ -1,20 +1,28 @@
-// function changeImage(imageId) {
-//     var img = document.getElementById(imageId);
-//     var favoriteImage = "/static/images/favorite.png";
-//     var likedImage = "/static/images/liked.png";
+async function handleLike(showId) {
+    try {
+        const response = await fetch(`/like/${showId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCSRFToken(), // Ensure you have a function to fetch CSRF token
+            },
+            body: JSON.stringify({ showId: showId }),
+        });
 
-//     if (img.src.includes(favoriteImage)) {
-//         img.src = likedImage;
-//     } else {
-//         img.src = favoriteImage;
-//     }
-// }
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
+        }
 
-function changeImage(imageId) {
-    var img = document.getElementById(imageId);
-    if (img.src.includes("/static/images/favorite.png")) {
-        img.src = "/static/images/liked.png";
-    } else {
-        img.src = "/static/images/favorite.png";
+        const data = await response.json();
+
+        // Update the image and like count based on data received from the server
+        const imageElement = document.getElementById(`image_${showId}`);
+        // Update the image source based on the server response
+        // ...
+
+        // Update the like count if needed
+        // ...
+
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
     }
 }

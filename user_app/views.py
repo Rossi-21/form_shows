@@ -162,17 +162,36 @@ def allShows(request):
         'shows' : shows,
         'favorites' : favorites,
     }
-
+    
     return render(request, "shows.html", context )
 
-@login_required
-def likeShow(reqeust, id):
+# @login_required
+# def likeShow(reqeust, id):
     
-    show = Show.objects.get(id=id)
+#     show = Show.objects.get(id=id)
 
-    show.like.add(reqeust.user)
+#     show.like.add(reqeust.user)
 
-    return redirect('allShows')
+#     return redirect('allShows')
+
+@login_required
+def likeShow(request, id):
+    if request.method == 'POST' and request.headers.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        show = Show.objects.get(id=id)
+        user = request.user
+
+        # Toggle like status
+        if user in show.like.all():
+            show.like.remove(user)
+        else:
+            show.like.add(user)
+
+        # Return updated data
+        like_count = show.like.count()
+
+        return JsonResponse({'success': True, 'like_count': like_count})
+
+    return JsonResponse({'success': False})
 
 # @login_required
 # def likeShow(request):
