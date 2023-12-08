@@ -160,24 +160,24 @@ def allShows(request):
 
     return render(request, "shows.html", context )
 
-# @login_required
-# def likeShow(reqeust, id):
-    
-#     show = Show.objects.get(id=id)
-
-#     show.like.add(reqeust.user)
-
-#     return redirect('allShows')
-
 @login_required
-def likeShow(request):
-    if request.method == 'POST' and request.is_ajax():
-        show_id = request.POST.get('show_id')
-        show = Show.objects.get(id=show_id)
-        show.like.add(request.user)
-        return JsonResponse({'message': 'Liked successfully'}, status=200)
-    else:
-        return JsonResponse({'message': 'Invalid request'}, status=400)
+def likeShow(reqeust, id):
+    
+    show = Show.objects.get(id=id)
+
+    show.like.add(reqeust.user)
+
+    return redirect('allShows')
+
+# @login_required
+# def likeShow(request):
+#     if request.method == 'POST' and request.is_ajax():
+#         show_id = request.POST.get('show_id')
+#         show = Show.objects.get(id=show_id)
+#         show.like.add(request.user)
+#         return JsonResponse({'message': 'Liked successfully'}, status=200)
+#     else:
+#         return JsonResponse({'message': 'Invalid request'}, status=400)
 
 
 @login_required
