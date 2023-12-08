@@ -18,6 +18,18 @@
                     {% endfor %}
                 </ul>
             </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <strong>Favorites</strong>
+                </div>
+                <ul class="list-group list-group-flush" >
+                    {% for favorite in favorites %}
+                        <li class="list-group-item" >
+                            <a href="{% url 'viewShow' favorite.id %}">{{favorite.title}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
             <a href="{% url 'updateUser' user.id %}">Update Profile</a>
         </div>
     </div>

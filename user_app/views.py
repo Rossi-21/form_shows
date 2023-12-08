@@ -62,10 +62,13 @@ def showUser(request, id):
 
     shows = Show.objects.filter(user=user)
 
+    favorites = Show.objects.filter(like=user)
+
     context = {
         'user' : user,
         'profile' :profile,
-        'shows' : shows
+        'shows' : shows,
+        'favorites' : favorites
     }
 
     return render(request, "user.html", context)
@@ -152,10 +155,12 @@ def allShows(request):
 
     user = request.user
     shows = Show.objects.all()
+    favorites = Show.objects.filter(like=user)
 
     context = {
         'user' : user,
         'shows' : shows,
+        'favorites' : favorites,
     }
 
     return render(request, "shows.html", context )

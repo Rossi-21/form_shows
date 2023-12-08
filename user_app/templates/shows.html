@@ -16,7 +16,10 @@
                         <div class="d-flex">
                             <form class="like-form" action="{% url 'likeShow' show.id %}" method="POST">
                                 {% csrf_token %}
-                                <input id="emptyHeart_{{ show.id }}" class="like-button" onclick="changeImage('emptyHeart_{{ show.id }}')" type="image" src="/static/images/favorite.png">
+                                <button type="submit">
+                                    <img id="image_{{ show.id }}" class="like-button" onclick="changeImage('image_{{ show.id }}')" src="{% if show.like %}/static/images/liked.png{% else %}/static/images/favorite.png{% endif %}" alt="Like">
+                                </button> 
+                                <!-- <input id="emptyHeart_{{ show.id }}" class="like-button" onclick="changeImage('emptyHeart_{{ show.id }}')" type="image" src="/static/images/favorite.png"> -->
                             </form> 
                             {{ show.like.count }}
                             {% if request.user == show.user %}
