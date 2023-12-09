@@ -13,19 +13,19 @@
                         <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img" alt="show image"></a>
                     {% endif %}
                     <div class="card-body">
-                        <div class="d-flex">
+                        <div class="d-flex justify-content-start">
                             <form class="like-form" action="{% url 'likeShow' show.id %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" onclick="handleLike(show.id)">
-                                    {% if user in show.like.all %}
-                                        <img id="image_{{ show.id }}" class="like-button" onclick="changeImage()" src="/static/images/liked.png"alt="Like">
-                                    {% else %}
-                                        <img id="image_{{ show.id }}" class="like-button" onclick="changeImage()" src="/static/images/favorite.png"alt="Like">
-                                    {% endif %}
+                                <button type="submit" class="like-button" data-show-id="{{ show.id }}">
+                                    {% if user in show.like.all %} 
+                                        <img id="image_{{ show.id }}" class="like-button" src="/static/images/liked.png"alt="Like">
+                                    {% else %} 
+                                        <img id="image_{{ show.id }}" class="like-button" src="/static/images/favorite.png"alt="Like">
+                                    {% endif %} 
                                 </button> 
                                 <!-- <input id="emptyHeart_{{ show.id }}" class="like-button" onclick="changeImage('emptyHeart_{{ show.id }}')" type="image" src="/static/images/favorite.png"> -->
                             </form> 
-                            {{ show.like.count }}
+                           <p>{{ show.like.count }}</p> 
                             {% if request.user == show.user %}
                             <span><a class="margin-left" href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a></span>  
                                 <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
@@ -38,5 +38,5 @@
             </div>
         </div>
     </div>           
-{%  endfor %}   
+{%  endfor %}  
 {% endblock %}
