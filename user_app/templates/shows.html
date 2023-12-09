@@ -25,7 +25,7 @@
                                 </button> 
                                 <!-- <input id="emptyHeart_{{ show.id }}" class="like-button" onclick="changeImage('emptyHeart_{{ show.id }}')" type="image" src="/static/images/favorite.png"> -->
                             </form> 
-                           <p>{{ show.like.count }}</p> 
+                            <p>{{ show.like.count }}</p> 
                             {% if request.user == show.user %}
                             <span><a class="margin-left" href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a></span>  
                                 <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>

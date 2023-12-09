@@ -173,6 +173,8 @@ def likeShow(request, id):
 
         if request.user not in show.like.all():
             show.like.add(request.user)
+        else:
+            show.like.remove(request.user)
 
     return redirect('allShows')
 
