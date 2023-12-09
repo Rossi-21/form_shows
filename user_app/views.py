@@ -108,6 +108,8 @@ def logoutUser(request):
 @login_required
 def home(request):
 
+    profile = Profile.objects.get(user__id=request.user.id)
+
     form = CreateShowForm()
 
     if request.method == 'POST':
@@ -123,6 +125,7 @@ def home(request):
         
     context = {
         'form' : form,
+        'profile':profile
     }
 
     return render(request, "index.html", context)
@@ -130,6 +133,7 @@ def home(request):
 @login_required
 def viewShow(request, id):
 
+    profile = Profile.objects.get(user__id=request.user.id)
     show = Show.objects.get(id=id)
     comments = show.comment.all()
 
@@ -146,7 +150,8 @@ def viewShow(request, id):
 
     context = {
         'show' : show,
-        'comments' : comments
+        'comments' : comments,
+        'profile' :profile
     }
     return render(request, 'view.html', context)
 
@@ -154,6 +159,7 @@ def viewShow(request, id):
 def allShows(request):
 
     user = request.user
+    profile = Profile.objects.get(user__id=user.id)
     shows = Show.objects.all()
     favorites = Show.objects.filter(like=user)
 
@@ -161,6 +167,7 @@ def allShows(request):
         'user' : user,
         'shows' : shows,
         'favorites' : favorites,
+        'profile' : profile
     }
     
     return render(request, "shows.html", context )
@@ -181,6 +188,7 @@ def likeShow(request, id):
 @login_required
 def editShow(request, id):
 
+    profile = Profile.objects.get(user__id=request.user.id)
     show = Show.objects.get(id=id)
 
     form = CreateShowForm(instance=show)
@@ -197,7 +205,8 @@ def editShow(request, id):
 
     context ={
         'show' : show,
-        'form' : form
+        'form' : form,
+        'profile' : profile
     }
 
     return render(request, 'edit.html', context)
