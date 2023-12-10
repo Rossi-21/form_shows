@@ -95,7 +95,8 @@ def updateUser(request, id):
 
     context = {
         'user_form' : user_form,
-        'profile_form' : profile_form
+        'profile_form' : profile_form,
+        'profile' : profile
     }
     return render(request, "updateUser.html", context)
 

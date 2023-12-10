@@ -9,6 +9,14 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card mb-4 ">
+                    <div class="card-header">
+                        <div class="d-flex">
+                            {% if show.user.profile.profile_image %}
+                                <img class="rounded-circle" src="{{show.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
+                            {% endif %}
+                            <a class="nav-link text-dark" href="/user/{{show.user.id}}">{{show.user}}</a>
+                        </div>
+                    </div>
                     {% if show.show_image %}
                         <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img" alt="show image"></a>
                     {% endif %}
@@ -23,7 +31,6 @@
                                         <img id="image_{{ show.id }}" class="like-button" src="/static/images/favorite.png"alt="Like">
                                     {% endif %} 
                                 </button> 
-                                <!-- <input id="emptyHeart_{{ show.id }}" class="like-button" onclick="changeImage('emptyHeart_{{ show.id }}')" type="image" src="/static/images/favorite.png"> -->
                             </form> 
                             <p>{{ show.like.count }}</p> 
                             {% if request.user == show.user %}
