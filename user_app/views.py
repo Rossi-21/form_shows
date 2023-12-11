@@ -68,18 +68,14 @@ def showUser(request, id):
 def updateUser(request, id):
 
     user = User.objects.get(id=id)
-    profile = Profile.objects.get(user__id=id)
 
     user_form = CreateUserForm(instance=user)
-    profile_form = ProfilePicForm(instance=profile)
 
     if request.method == 'POST':
-        user_form = CreateUserForm(request.POST or None, request.FILES or None, instance=user)
-        profile_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile)
+        user_form = CreateUserForm(request.POST or None, instance=user)
 
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
             user_form.save()
-            profile_form.save()
             
             login(request, user)
 
@@ -87,8 +83,6 @@ def updateUser(request, id):
         
     context = {
         'user_form' : user_form,
-        'profile_form' : profile_form,
-        'profile' : profile
     }
 
     return render(request, "updateUser.html", context)
