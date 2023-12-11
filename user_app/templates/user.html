@@ -7,7 +7,10 @@
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header">
-                    <strong>My Shows</strong>
+                    {% if user.profile.profile_image %}
+                        <img class="rounded-circle" src="{{user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">   
+                    {% endif %}
+                    <strong>{{user.username}}'s Shows</strong>
                 </div>
                 <ul class="list-group list-group-flush" >
                     {% for show in shows %}
@@ -20,7 +23,10 @@
             </div>
             <div class="card mb-4">
                 <div class="card-header">
-                    <strong>Favorites</strong>
+                    {% if user.profile.profile_image %}
+                        <img class="rounded-circle" src="{{user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">   
+                    {% endif %}
+                    <strong>{{user.username}}'s Favorites</strong>
                 </div>
                 <ul class="list-group list-group-flush" >
                     {% for favorite in favorites %}
@@ -30,7 +36,9 @@
                     {% endfor %}
                 </ul>
             </div>
+            {% if request.user.id == user.id %}
             <a href="{% url 'updateUser' user.id %}">Update Profile</a>
+            {% endif %}
         </div>
     </div>
 </div>

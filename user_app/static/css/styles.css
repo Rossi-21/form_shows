@@ -39,6 +39,14 @@ span, .margin-left{
     width: 25%;
 }
 
+.mt-3{
+    margin-top: 3% ;
+}
+
+/* .ms-3{
+    margin-left: 2%;
+} */
+
 .card {
     background-color: #3da6a9;
     color: #ffffff;

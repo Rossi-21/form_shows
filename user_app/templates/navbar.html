@@ -6,9 +6,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            {% if profile.profile_image %}
+            {% if request.user.profile.profile_image %}
                 <li class="nav-item">
-                    <img class="rounded-circle" src="{{user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
+                    <img class="rounded-circle" src="{{request.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
                 </li>   
             {% endif %}
             <li class="nav-item active">
