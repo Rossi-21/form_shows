@@ -13,7 +13,7 @@ class ProfilePicForm(forms.ModelForm):
         model = Profile
         fields = ('profile_image',)
         
-    def clean(self):
+    def clean_profile_image(self):
         profile_image = self.cleaned_data.get('profile_image')
 
         if profile_image:
@@ -57,6 +57,16 @@ class CreateShowForm(forms.ModelForm):
             'release_date' : forms.DateInput(attrs={'type' :'date', 'class' : 'form-control mb-2'}),
             'description' : forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+    def clean_show_image(self):
+        show_image = self.cleaned_data.get('show_image')
+
+        if show_image:
+            ext = os.path.splitext(show_image.name)[1].lower()
+            if ext not in ['.jpg', '.jpeg', '.png']:
+                raise forms.ValidationError('Only JPEG or PNG files are allowed.')
+
+        return show_image
 
     def clean(self):
         cleaned_data = super(CreateShowForm, self).clean()
