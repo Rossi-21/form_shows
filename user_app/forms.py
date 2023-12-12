@@ -1,9 +1,11 @@
 from django import forms
 from django.forms import ModelForm
-from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
+import os
+
+from .models import *
 
 class ProfilePicForm(forms.ModelForm):
     profile_image = forms.ImageField(label = "Profile Picture")
@@ -11,7 +13,15 @@ class ProfilePicForm(forms.ModelForm):
         model = Profile
         fields = ('profile_image',)
         
-        
+    def clean(self):
+        profile_image = self.cleaned_data.get('profile_image')
+
+        if profile_image:
+            ext = os.path.splitext(profile_image.name)[1].lower()
+            if ext not in ['.jpg', '.jpeg', '.png']:
+                raise forms.ValidationError('Only JPEG or PNG files are allowed.')
+
+        return profile_image
 
 
 class CreateUserForm(UserCreationForm):
