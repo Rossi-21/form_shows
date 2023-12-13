@@ -55,6 +55,16 @@ def showUser(request, id):
     shows = Show.objects.filter(user=user)
     favorites = Show.objects.filter(like=user)
 
+    if request.method == "POST":
+        current_user_profile = request.user.profile
+        action = request.POST['follow']
+        if action == "unfollow":
+            current_user_profile.follows.remove(user.id)
+        elif action == "follow":
+            current_user_profile.follows.add(user.id)
+        
+        current_user_profile.save()
+
     context = {
         'user' : user,
         'profile' :profile,
@@ -169,7 +179,7 @@ def allShows(request):
 
     user = request.user
     profile = Profile.objects.get(user__id=user.id)
-    shows = Show.objects.all()
+    shows = Show.objects.all().order_by('-created_at')
     favorites = Show.objects.filter(like=user)
 
     context = {
