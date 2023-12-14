@@ -93,7 +93,21 @@ span, .margin-left{
     border-color: #3da6a9;
 }
 
-.like-button{
+.like-button {
     background-color:#3da6a9 ;
     border: none;
+}
+
+.fixed-image-size {
+    /* Set your desired dimensions here */
+    width: 100%; /* Example width */
+    height: 400px; /* Example height */
+    /* You can use 'object-fit' property to adjust how the image fits within the dimensions */
+    object-fit: contain; /* Example value */
+}
+
+.profile_image {
+    width: 2.5em;
+    height: 2.5em;
+    object-fit: cover;
 }
