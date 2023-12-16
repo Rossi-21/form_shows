@@ -5,23 +5,23 @@
 {% include 'hero.html' %}
 
 {% for show in shows %}
-    <div class="container mt-4 mb-4">
+    <div class="container mt-4">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card mb-4">
-                    <div class="card-header">
+                    <div class="card-header d-flex align-items-center">
                         <div class="d-flex">
                             {% if show.user.profile.profile_image %}
                                 <img class="rounded-circle profile_image" src="{{show.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
                             {% endif %}
-                            <a class="nav-link text-light" href="/user/{{show.user.id}}">{{show.user}}</a>
+                            <a class="nav-link text-dark" href="/user/{{show.user.id}}">{{show.user}}</a>
                         </div>
                     </div>
                     {% if show.show_image %}
-                        <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="mt-1 card-img fixed-image-size" alt="show image"></a>
+                        <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
                     {% endif %}
                     <div class="card-body">
-                        <div class="d-flex justify-content-start">
+                        <div class="d-flex">
                             <form class="like-form" action="{% url 'likeShow' show.id %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="like-button" data-show-id="{{ show.id }}">
@@ -38,7 +38,7 @@
                                 <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
                             {% endif %}
                         </div>
-                        <a href="{% url 'viewShow' show.id %}"><h5 class="card-title">{{show.title}}</h5></a>
+                        <a class="text-decoration-none" href="{% url 'viewShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
                         <p class="card-text">{{show.description}}</p>    
                     </div>
                 </div>

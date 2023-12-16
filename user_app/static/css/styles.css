@@ -8,24 +8,24 @@
 
 body {
     background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
+    color: #333;
+    font-family: 'Montserrat', sans-serif; /* Adding Montserrat font */
 }
 
 span, .margin-left{
     margin-left:1em;
 }
 
+a {
+    text-decoration: none;
+}
+
 .form-width, #btn-width{
     width: 100%;
 }
 
-.navbar {
-    background-color: #38a9ca;
-}
-
 .jumbotron {
-    background-color: #4178a3;
-    color: #ffffff;
+    color: black;
     padding: 100px 20px;
     margin-bottom: 0;
 }
@@ -35,32 +35,14 @@ span, .margin-left{
     padding: 0%;
 }
 
-.card-width{
+/* .card-width{
     width: 25%;
-}
+} */
 
-.mt-3{
+.mt-3 {
     margin-top: 3% ;
 }
 
-/* .ms-3{
-    margin-left: 2%;
-} */
-
-.card {
-    background-color: #3da6a9;
-    color: #ffffff;
-    width: 98%;
-    transition: transform 0.3s ease-in-out;
-}
-
-.card:hover {
-    transform: scale(1.01);
-}
-
-.card-title {
-    color: #ffffff;
-}
 .login-container {
     max-width: 400px;
     margin: 100px auto;
@@ -80,7 +62,7 @@ span, .margin-left{
 
 .form-control:focus {
     box-shadow: 0 0 5px rgba(61, 166, 169, 0.5);
-    border-color: #38a9ca;
+    border-color: grey;
 }
 
 .btn-login {
@@ -94,7 +76,7 @@ span, .margin-left{
 }
 
 .like-button {
-    background-color:#3da6a9 ;
+    background-color:white ;
     border: none;
 }
 
