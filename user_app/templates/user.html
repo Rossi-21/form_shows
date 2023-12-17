@@ -2,58 +2,127 @@
 {% block content %}
 {% include 'navbar.html' %}
 {% include 'hero.html' %}
-<div>
-    
-</div>
-
-<!-- <div class="container mt-4 mb-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="container mt-4">
+    <div class="row">
+        <!-- Column for user's followers and follow/unfollow button -->
+        <div class="col-md-3">
+            <!-- Display user's followers -->
             <div class="card mb-4">
                 <div class="card-header">
-                    {% if user.profile.profile_image %}
-                        <img class="rounded-circle" src="{{user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">   
-                    {% endif %}
-                    <strong>{{user.username}}'s Shows</strong>
+                    <strong>Followers</strong>
                 </div>
-                <ul class="list-group list-group-flush" >
-                    {% for show in shows %}
-                        <li class="list-group-item d-flex align-items-center" >
-                            <a href="{% url 'viewShow' show.id %}">{{show.title}}</a>
-                            <span class="badge bg-primary rounded-pill">{{ show.like.count }}</span>
+                <ul class="list-group list-group-flush">
+                    {% for follower in user.profile.followed_by.all %}
+                        <li class="list-group-item">
+                            <a href="/user/{{ follower.id }}">{{ follower.username }}</a>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    {% if user.profile.profile_image %}
-                        <img class="rounded-circle" src="{{user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">   
+            
+            <!-- Follow/Unfollow button -->
+            {% if request.user.id != user.id %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% if profile in user.profile.followed_by.all %}
+                        <button class="btn btn-secondary" name="follow" value="unfollow" type="submit">Unfollow {{ user.username }}</button>
+                    {% else %}
+                        <button class="btn btn-secondary" name="follow" value="follow" type="submit">Follow {{ user.username }}</button>
                     {% endif %}
-                    <strong>{{user.username}}'s Favorites</strong>
-                </div>
-                <ul class="list-group list-group-flush" >
-                    {% for favorite in favorites %}
-                        <li class="list-group-item" >
-                            <a href="{% url 'viewShow' favorite.id %}">{{favorite.title}}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% if request.user.id == user.id %}
-            <a href="{% url 'updateUser' user.id %}">Update Profile</a>
+                </form>
             {% endif %}
         </div>
-        {% if request.user.id != user.id %}
-            <form action="" method="POST">
-                {% csrf_token %}
-                {% if profile in user.profile.followed_by.all %}
-                    <button class="btn btn-secondary" name="follow" value="unfollow" type="submit">Unfollow {{user.username}}</button>
-                {% else %}
-                    <button class="btn btn-secondary" name="follow" value="follow" type="submit">Follow {{user.username}}</button>
-                {% endif %} 
-            </form>
-        {% endif %}
+<div class="col-md-6">
+    {% for show in shows %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-header d-flex align-items-center">
+                        <div class="d-flex">
+                            {% if show.user.profile.profile_image %}
+                                <img class="rounded-circle profile_image" src="{{show.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
+                            {% endif %}
+                            <a class="nav-link text-dark" href="/user/{{show.user.id}}">{{show.user}}</a>
+                        </div>
+                    </div>
+                    {% if show.show_image %}
+                        <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <form class="like-form" action="{% url 'likeShow' show.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="like-button" data-show-id="{{ show.id }}">
+                                    {% if user in show.like.all %} 
+                                        <img id="image_{{ show.id }}" class="like-button" src="/static/images/liked.png"alt="Like">
+                                    {% else %} 
+                                        <img id="image_{{ show.id }}" class="like-button" src="/static/images/favorite.png"alt="Like">
+                                    {% endif %} 
+                                </button> 
+                            </form> 
+                            <p>{{ show.like.count }}</p> 
+                            {% if request.user == show.user %}
+                            <span><a class="margin-left" href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a></span>  
+                                <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
+                            {% endif %}
+                        </div>
+                        <a class="text-decoration-none" href="{% url 'viewShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
+                        <p class="card-text">{{show.description}}</p>    
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endfor %}
+</div>
+
+<div class="col-md-3">
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>{{ user.username }}'s Favorites</strong>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for favorite in favorites %}
+                <li class="list-group-item">
+                    <a href="{% url 'viewShow' favorite.id %}">{{ favorite.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
+    {% if request.user.id == user.id %}
+        <a href="{% url 'updateUser' user.id %}">Update Profile</a>
+    {% endif %}
+</div>
+</div>
+</div>
+<!-- <div class="card mb-4">
+    <div class="card-header">
+        {% if user.profile.profile_image %}
+            <img class="rounded-circle" src="{{user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">   
+        {% endif %}
+        <strong>{{user.username}}'s Favorites</strong>
+    </div>
+    <ul class="list-group list-group-flush" >
+        {% for favorite in favorites %}
+            <li class="list-group-item" >
+                <a href="{% url 'viewShow' favorite.id %}">{{favorite.title}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% if request.user.id == user.id %}
+    <a href="{% url 'updateUser' user.id %}">Update Profile</a>
+{% endif %}
+</div>
+{% if request.user.id != user.id %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {% if profile in user.profile.followed_by.all %}
+        <button class="btn btn-secondary" name="follow" value="unfollow" type="submit">Unfollow {{user.username}}</button>
+    {% else %}
+        <button class="btn btn-secondary" name="follow" value="follow" type="submit">Follow {{user.username}}</button>
+    {% endif %} 
+</form>
+{% endif %}
+</div>
 </div> -->
 {% endblock %}
