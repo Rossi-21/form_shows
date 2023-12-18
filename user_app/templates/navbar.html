@@ -16,7 +16,8 @@
                     {{request.user}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/user/{{request.user.id}}">View User</a>
+                    <a class="dropdown-item" href="/user/{{request.user.id}}">View Profile</a>
+                    <a class="dropdown-item" href="{% url 'updateUser' user.id %}">Update Profile</a>
                     <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                 </div>
             </li>
