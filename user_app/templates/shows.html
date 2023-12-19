@@ -21,7 +21,7 @@
                         <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
                     {% endif %}
                     <div class="card-body">
-                        <div class="d-flex">
+                        <div id="like-button" class="d-flex">
                             <form class="like-form" action="{% url 'likeShow' show.id %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="like-button" data-show-id="{{ show.id }}">
@@ -33,14 +33,11 @@
                                 </button> 
                             </form> 
                             <p>{{ show.like.count }}</p> 
-                            {% if request.user == show.user %}
-                            <span><a class="margin-left" href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a></span>  
-                                <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
-                            {% endif %}
                         </div>
+
                         <a class="text-decoration-none" href="{% url 'viewShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
                         <p class="card-text">{{show.description}}</p>    
-                    </div>
+                    
                 </div>
             </div>
         </div>

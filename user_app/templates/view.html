@@ -20,6 +20,7 @@
                         {% endif %}
                         {% if request.user == show.user %}
                             <a href="/shows/{{ show.id }}/edit" class="btn btn-primary m-3">Edit</a>
+                            <a href="/shows/{{ show.id }}/delete" class="btn btn-danger m-3">Delete</a>
                         {% endif %}
                     </div>
                 </div>
