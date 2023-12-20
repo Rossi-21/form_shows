@@ -39,13 +39,16 @@
                     {% for comment in comments %}
                         <div class="media mt-3">
                             <div class="media-body">
-                                <h5 class="mt-0">{{ comment.user }}</h5>
+                                <div class="d-flex">
+                                    <h5>{{ comment.user }}</h5>
+                                    {% if request.user == comment.user %}
+                                        <a class="margin-left" href="{% url 'deleteComment' comment.id %}">
+                                            <img src="/static/images/delete.png" alt="Delete">
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                
                                 <p>{{ comment.description }}</p>
-                                {% if request.user == comment.user %}
-                                    <a href="{% url 'deleteComment' comment.id %}">
-                                        <img src="/static/images/delete.png" alt="Delete">
-                                    </a>
-                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}
