@@ -3,10 +3,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
+import requests
 
 from .models import *
 from .forms import *
+
+api_key = settings.API_KEY
 
 def registerUser(request):
 
@@ -182,11 +186,33 @@ def allShows(request):
     shows = Show.objects.all().order_by('-created_at')
     favorites = Show.objects.filter(like=user)
 
+    URL = "https://api.openai.com/v1/chat/completions"
+
+    payload = {
+    "model": "gpt-3.5-turbo",
+    "messages": [{"role": "user", "content": f"What is the first TV show in the world?"}],
+    "temperature" : 1.0,
+    "top_p":1.0,
+    "n" : 1,
+    "stream": False,
+    "presence_penalty":0,
+    "frequency_penalty":0,
+    }
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+
+    response = requests.post(URL, headers=headers, json=payload, stream=False)
+    data = response.json()
+   
     context = {
         'user' : user,
         'shows' : shows,
         'favorites' : favorites,
-        'profile' : profile
+        'profile' : profile,
+        'data' : data
     }
     
     return render(request, "shows.html", context )

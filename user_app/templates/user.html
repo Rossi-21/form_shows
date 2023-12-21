@@ -13,9 +13,11 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     {% for follower in profile.followed_by.all %}
-                        <li class="list-group-item">
-                            <a href="/user/{{ follower.id }}">{{ follower }}</a>
-                        </li>
+                        {% if follower.id != user.id %}
+                            <li class="list-group-item">
+                                <a href="/user/{{ follower.id }}">{{ follower }}</a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
