@@ -4,6 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+#email imports
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 import requests
 
@@ -11,6 +15,7 @@ from .models import *
 from .forms import *
 
 api_key = settings.API_KEY
+email_password = settings.EMAIL_HOST_PASSWORD
 
 def registerUser(request):
 
@@ -21,8 +26,15 @@ def registerUser(request):
 
         if form.is_valid():
             user = form.save()
-
             login(request, user)
+
+            subject = 'Welcome to the TV Party!'
+            html_message = render_to_string('registration_email.html', {'user': user})
+            plain_message = strip_tags(html_message)
+            from_email = 'rossi21.dev@gmail.com'
+            to = [user.email]
+
+            send_mail(subject, plain_message, from_email, to, html_message=html_message )
 
             return redirect('allShows')
     
