@@ -29,7 +29,11 @@
 
                     <button class="btn btn-secondary mt-3" type="submit">Update</button>
                 </form>
-                <a class="m-3 text-dark" href="{% url 'updateImage' user.id %}">Update Image</a>
+                <div class="d-flex align-items-center">
+                    <a class="m-3 text-dark" href="{% url 'updateImage' user.id %}">Update Image</a>
+                    <a href="{% url 'deleteUser' user.id %}"><button class="btn btn-danger">Delete Account</button></a>
+                </div>
+                
             </div>
         </div>
     </div>

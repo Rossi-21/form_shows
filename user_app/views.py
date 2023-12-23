@@ -113,6 +113,13 @@ def updateUser(request, id):
 
     return render(request, "updateUser.html", context)
 
+@login_required
+def deleteUser(request, id):
+    user = User.objects.get(id=id)
+    user.delete()
+
+    return redirect("registerUser")
+
 def updateImage(request, id):
 
     user = User.objects.get(id=id)
