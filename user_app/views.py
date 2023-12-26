@@ -16,7 +16,7 @@ from .forms import *
 
 api_key = settings.API_KEY
 email_password = settings.EMAIL_HOST_PASSWORD
-email_address = settings.EMAIL_ADDRESS
+email_address = settings.EMAIL_HOST_USER
 
 # Register user function
 def registerUser(request):
@@ -223,7 +223,13 @@ def allShows(request):
 
     payload = {
     "model": "gpt-3.5-turbo",
-    "messages": [{"role": "user", "content": f"What is the first TV show in the world?"}],
+    "messages": [{
+        "role": "user", 
+        "content": f"""You are an expert on the History of Television. 
+                    You have a deep understading of all things related to Television.
+                    Give a random fact from Television History.
+                    """
+        }],
     "temperature" : 1.0,
     "top_p":1.0,
     "n" : 1,
