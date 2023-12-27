@@ -104,21 +104,24 @@ def showUser(request, id):
 
     return render(request, "user.html", context)
 
+# Update User Method
 @login_required
 def updateUser(request, id):
-
+    # Get the User by id
     user = User.objects.get(id=id)
-
+    # Grab the Create User Form from forms.py for the view with the info currently in the database
     user_form = CreateUserForm(instance=user)
 
     if request.method == 'POST':
+        # Process the Create User Form
         user_form = CreateUserForm(request.POST or None, instance=user)
 
         if user_form.is_valid():
+            # Save the edited form to the database
             user_form.save()
-            
+            # Login the user
             login(request, user)
-
+            # return to the View User page
             return redirect(f'/user/{user.id}')
         
     context = {
@@ -127,26 +130,34 @@ def updateUser(request, id):
 
     return render(request, "updateUser.html", context)
 
+# Delete User Method
 @login_required
 def deleteUser(request, id):
+    # Get the User by id
     user = User.objects.get(id=id)
+    # Delete the User object form the database
     user.delete()
-
+    # Send the User back to the registration page
     return redirect("registerUser")
 
+# Update the User Image Method
+@login_required
 def updateImage(request, id):
-
+    # Get the User by id
     user = User.objects.get(id=id)
+    # Get the Profile associated with that User
     profile = Profile.objects.get(user__id=id)
-
+    # Get the Profile Picture Form from forms.py
     form = ProfilePicForm(instance=profile)
 
     if request.method == 'POST':
+        # Process the Profile Picture Form
         form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile)
 
         if form.is_valid():
+            # Save the form data to the database
             form.save()
-
+            # Send the User back to the View User page
             return redirect(f'/user/{user.id}')
 
     context = {
@@ -156,11 +167,14 @@ def updateImage(request, id):
 
     return render(request, "updateImage.html", context)
 
+# Logout User Method
+@login_required
 def logoutUser(request):
-
+    # Logout the User
     logout(request)
-
+    # Send the User back to the Login page
     return redirect('loginUser')
+
 
 @login_required
 def home(request):

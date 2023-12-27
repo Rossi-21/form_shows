@@ -6,18 +6,25 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <!-- Show Card-->
-            <div class="card mb-4">
+            <div class="card shadow-lg mb-4">
+                <div class="card-header d-flex align-items-center">
+                    <div class="d-flex">
+                        {% if show.user.profile.profile_image %}
+                            <img class="rounded-circle profile_image" src="{{show.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
+                        {% endif %}
+                        <a class="nav-link text-dark" href="/user/{{show.user.id}}">{{show.user}}</a>
+                    </div>
+                </div>
+                {% if show.show_image %}
+                    <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
+                {% endif %}
                 <div class="card-body position-relative">
                     <h2 class="card-title">{{ show.title }}</h2>
                     <p class="card-text"><strong>Network: </strong>{{ show.network }}</p>
                     <p class="card-text"><strong>Release date: </strong>{{ show.release_date }}</p>
                     <p class="card-text"><strong>Description: </strong>{{ show.description }}</p>
                     <p class="card-text"><strong>Likes: </strong>{{ show.like.count }}</p>
-                    <p class="card-text"><strong>Added by: </strong>{{ show.user }}</p>
                     <div class="d-flex flex-column">
-                        {% if show.show_image %}
-                            <img src="{{ show.show_image.url }}" alt="{{ show.network }}" class="img-fluid mb-3" width="200">
-                        {% endif %}
                         {% if request.user == show.user %}
                             <a href="/shows/{{ show.id }}/edit" class="btn btn-primary m-3">Edit</a>
                             <a href="/shows/{{ show.id }}/delete" class="btn btn-danger m-3">Delete</a>
@@ -26,7 +33,7 @@
                 </div>
             </div>
             <!-- Comment Card -->
-            <div class="card mt-4">
+            <div class="card shadow-lg mb-4">
                 <div class="card-body">
                     <form class="form-group" action="" method="POST">
                         {% csrf_token %}
@@ -40,7 +47,12 @@
                         <div class="media mt-3">
                             <div class="media-body">
                                 <div class="d-flex">
-                                    <h5>{{ comment.user }}</h5>
+                                    <div class="d-flex">
+                                        {% if show.user.profile.profile_image %}
+                                            <img class="rounded-circle profile_image" src="{{comment.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
+                                        {% endif %}
+                                        <h5><a class="nav-link text-dark" href="/user/{{comment.user.id}}">{{show.user}}</a></h5>
+                                    </div>
                                     {% if request.user == comment.user %}
                                         <a class="margin-left" href="{% url 'deleteComment' comment.id %}">
                                             <img src="/static/images/delete.png" alt="Delete">
