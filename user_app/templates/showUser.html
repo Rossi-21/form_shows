@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             {% if show.show_image %}
-                                <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
+                                <a href="{% url 'showShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
                             {% endif %}
                             <div class="card-body">
                                 <div class="d-flex">
@@ -67,7 +67,7 @@
                                         <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
                                     {% endif %}
                                 </div>
-                                <a class="text-decoration-none" href="{% url 'viewShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
+                                <a class="text-decoration-none" href="{% url 'showShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
                                 <p class="card-text">{{show.description}}</p>    
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                 <ul class="list-group list-group-flush">
                     {% for favorite in favorites %}
                         <li class="list-group-item">
-                            <a href="{% url 'viewShow' favorite.id %}">{{ favorite.title }}</a>
+                            <a href="{% url 'showShow' favorite.id %}">{{ favorite.title }}</a>
                         </li>
                     {% endfor %}
                 </ul>

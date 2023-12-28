@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     {% if show.show_image %}
-                        <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
+                        <a href="{% url 'showShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
                     {% endif %}
                     <div class="card-body">
                         <div id="like-button" class="d-flex">
@@ -35,7 +35,7 @@
                             <p>{{ show.like.count }}</p> 
                         </div>
 
-                        <a class="text-decoration-none" href="{% url 'viewShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
+                        <a class="text-decoration-none" href="{% url 'showShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
                         <p class="card-text">{{show.description}}</p>    
                     
                 </div>

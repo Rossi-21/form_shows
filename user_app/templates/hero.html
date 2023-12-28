@@ -1,5 +1,5 @@
 <div class="jumbotron text-center">
-    <a class="text-decoration-none text-dark" href="{% url  'allShows'%}"><h1 class="display-4">TV Party</h1></a>
+    <a class="text-decoration-none text-dark" href="{% url  'dashboard'%}"><h1 class="display-4">TV Party</h1></a>
     {% if data %}
         <p class="lead">{{ data.choices.0.message.content }}</p>
     {% else %}

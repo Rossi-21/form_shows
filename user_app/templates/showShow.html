@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 {% if show.show_image %}
-                    <a href="{% url 'viewShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
+                    <a href="{% url 'showShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
                 {% endif %}
                 <div class="card-body position-relative">
                     <h2 class="card-title">{{ show.title }}</h2>

@@ -41,7 +41,7 @@ def registerUser(request):
             send_mail(subject, plain_message, from_email, to, html_message=html_message )
 
             #Rredirect them to the dashboard
-            return redirect('allShows')
+            return redirect('dashboard')
     
     context = {
         'form' : form
@@ -63,7 +63,7 @@ def loginUser(request):
             # If the user exists log them in
             login(request, user)
             # Redirect to the dashboard
-            return redirect('allShows')
+            return redirect('dashboard')
         
         else:
             # If the user does not exist, display an error message
@@ -102,7 +102,7 @@ def showUser(request, id):
         'favorites' : favorites
     }
 
-    return render(request, "user.html", context)
+    return render(request, "showUser.html", context)
 
 # Update User Method
 @login_required
@@ -175,46 +175,57 @@ def logoutUser(request):
     # Send the User back to the Login page
     return redirect('loginUser')
 
-
+# Create Show Method
 @login_required
-def home(request):
-
+def createShow(request):
+    # Dispaly the User Profile Image
     profile = Profile.objects.get(user__id=request.user.id)
-
+    # Display the Create Show Form from forms.py
     form = CreateShowForm()
 
     if request.method == 'POST':
+        # Process the Create Show Form
         form = CreateShowForm(request.POST, request.FILES)
 
         if form.is_valid():
+            # Get the show instance without saving it to the database
             show = form.save(commit=False)
+            # Associate the current User with the show being created
             show.user = request.user
+            # Save the new show instance to the database
             form.save()
-
-            return redirect('allShows')
+            # Send the User to the dashbaord
+            return redirect('dashboard')
         
     context = {
         'form' : form,
         'profile':profile
     }
 
-    return render(request, "index.html", context)
+    return render(request, "createShow.html", context)
 
+# View a Show Method
 @login_required
-def viewShow(request, id):
-
+def showShow(request, id):
+    # Dispaly the User Profile Image
     profile = Profile.objects.get(user__id=request.user.id)
+    # Get the Show by id
     show = Show.objects.get(id=id)
+    # Get all of the comments related to that show
     comments = show.comment.all()
 
     if request.method == 'POST':
+        # Get the current User
         user = request.user
+        # Get the Show by id
         show = Show.objects.get(id=id)
+        # Process the comment form
         description = request.POST.get('description')
-
+        # Create a Comment object with the description from the form and associate it with the current User
         new_comment = Comment.objects.create(description = description, user = user)
+        # Save the comment to the database
         show.comment.add(new_comment)
-
+        # Keep the User on the same page so they can view thier Comment
         return redirect(f'/shows/{show.id}')
 
     context = {
@@ -223,22 +234,28 @@ def viewShow(request, id):
         'profile' :profile
     }
 
-    return render(request, 'view.html', context)
+    return render(request, 'showShow.html', context)
 
+# Dashboard Method
 @login_required      
-def allShows(request):
-
+def dashboard(request):
+    # Get the current User
     user = request.user
+    # Display the User Profile image
     profile = Profile.objects.get(user__id=user.id)
+    # Get all the shows in order of the create_at date
     shows = Show.objects.all().order_by('-created_at')
+    # Allow Users to Like Shows
     favorites = Show.objects.filter(like=user)
 
+    # Connect to ChatGPT API
     URL = "https://api.openai.com/v1/chat/completions"
-
+    # ChatGPT Configuration
     payload = {
     "model": "gpt-3.5-turbo",
     "messages": [{
         "role": "user", 
+        # ChatGPT Prompt
         "content": f"""You are an expert on the History of Television. 
                     You have a deep understading of all things related to Television.
                     Give a random fact from Television History.
@@ -256,8 +273,9 @@ def allShows(request):
         "Content-Type": "application/json",
         "Authorization": f"Bearer {api_key}"
     }
-
+    # Get the response from the ChatGPT API
     response = requests.post(URL, headers=headers, json=payload, stream=False)
+    # Save the json response as a veriable called data
     data = response.json()
    
     context = {
@@ -268,35 +286,45 @@ def allShows(request):
         'data' : data
     }
     
-    return render(request, "shows.html", context )
+    return render(request, "dashboard.html", context )
 
+# Like shows method
 @login_required
 def likeShow(request, id):
     
     if request.method =="POST":
+        # Get the show by id
         show = Show.objects.get(id=id)
-
+        # If the User does not Like the show allow them to Like it
         if request.user not in show.like.all():
+            # Add the Users Like to the database
             show.like.add(request.user)
+        # If the User dose Like the Show allow them to unLike it
         else:
+            # Delete the Users Like from the database
             show.like.remove(request.user)
+    # Send the User to the Dashboard page
+    return redirect('dashboard')
 
-    return redirect('allShows')
-
+# Update Show Method
 @login_required
-def editShow(request, id):
-
+def updateShow(request, id):
+    # Dispaly the User Profile Image
     profile = Profile.objects.get(user__id=request.user.id)
+    # Get the Show by id
     show = Show.objects.get(id=id)
-
+    # Display the Create Show Form with the current information from the database
     form = CreateShowForm(instance=show)
 
     if request.method == 'POST':
+        # Process the Create Show Form 
         form = CreateShowForm(request.POST or None, request.FILES or None, instance=show)
 
         if form.is_valid():
+            # Save the upadate Show object to the database
             form.save()
-
+        
+        #Send the User to the Shows page
         return redirect(f'/shows/{show.id}', show)
 
     context ={
@@ -305,22 +333,24 @@ def editShow(request, id):
         'profile' : profile
     }
 
-    return render(request, 'edit.html', context)
+    return render(request, 'updateShow.html', context)
 
+# Delete Show Method
 @login_required
 def deleteShow(reqeust, id):
-    
+    # Get the Show by id
     show = Show.objects.get(id=id)
-
+    # Remove the Show from the database
     show.delete()
-    
-    return redirect('allShows')
+    # Send the User to the Dashboard 
+    return redirect('dashboard')
 
+# Delete Comment Method
 @login_required
 def deleteComment(request, id):
-
+    # Get the Comment by id
     comment = Comment.objects.get(id=id)
-
+    # Remove the Comment from the Database
     comment.delete()
-
+    # Keep the User on the page
     return redirect(request.META.get('HTTP_REFERER', '/'))
