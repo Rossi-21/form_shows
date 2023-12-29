@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Logo with GitHub Link -->
     <a class="navbar-brand" href="https://github.com/Rossi-21">ROSSI21</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,22 +7,27 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
+            <!-- Dispaly User Profile Image if avalible -->
             {% if request.user.profile.profile_image %}
                 <li class="nav-item">
                     <img class="rounded-circle profile_image" src="{{request.user.profile.profile_image.url}}"  alt="profile image" >
                 </li>   
             {% endif %}
-            <li class="nav-item dropdown"> <!-- Dropdown structure added -->
+            <!-- Dropdown structure -->
+            <li class="nav-item dropdown"> 
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    {{request.user}}
+                    <!-- Diapaly Username -->
+                    {{ request.user }}
                 </a>
+                <!-- Dropdown Links -->
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/user/{{request.user.id}}">View Profile</a>
                     <a class="dropdown-item" href="{% url 'updateUser' user.id %}">Update Profile</a>
                     <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                 </div>
             </li>
+            <!-- Link to Create Show page -->
             <li class="nav-item">
                <a class="btn btn-light border border-4" href="{% url  'createShow'%}">CREATE</a> 
             </li>

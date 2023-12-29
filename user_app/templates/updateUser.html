@@ -2,6 +2,7 @@
 {% block content %}
 {% include 'navbar.html' %}
 {% include 'hero.html' %}
+
 <div class="container mt-4 mb-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -9,8 +10,10 @@
                 <div class="card-header">
                     <strong>Update Profile</strong>
                 </div>
+                <!-- Update Profile Form -->
                 <form class="m-3" method="POST" action="">
                     {% csrf_token %}
+
                     {{ user_form.username.label_tag}}
                     {{ user_form.username }}
                     {{ user_form.username.errors }}
@@ -29,13 +32,14 @@
 
                     <button class="btn btn-secondary mt-3" type="submit">Update</button>
                 </form>
+                <!-- Update Image & Delete Account Links -->
                 <div class="d-flex align-items-center">
                     <a class="m-3 text-dark" href="{% url 'updateImage' user.id %}">Update Image</a>
                     <a href="{% url 'deleteUser' user.id %}"><button class="btn btn-danger">Delete Account</button></a>
-                </div>
-                
+                </div>  
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

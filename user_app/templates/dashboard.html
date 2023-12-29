@@ -3,13 +3,14 @@
 {% load static %}
 {% include 'navbar.html' %}
 {% include 'hero.html' %}
-
+<!-- Display all of the Shows in the database -->
 {% for show in shows %}
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-lg mb-4">
                     <div class="card-header d-flex align-items-center">
+                        <!-- Dispaly User Image and Username -->
                         <div class="d-flex">
                             {% if show.user.profile.profile_image %}
                                 <img class="rounded-circle profile_image" src="{{show.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
@@ -17,10 +18,12 @@
                             <a class="nav-link text-dark" href="/user/{{show.user.id}}">{{show.user}}</a>
                         </div>
                     </div>
+                    <!-- Dispaly the Show image -->
                     {% if show.show_image %}
                         <a href="{% url 'showShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
                     {% endif %}
                     <div class="card-body">
+                        <!-- Like Button Functionality -->
                         <div id="like-button" class="d-flex">
                             <form class="like-form" action="{% url 'likeShow' show.id %}" method="POST">
                                 {% csrf_token %}
@@ -32,9 +35,10 @@
                                     {% endif %} 
                                 </button> 
                             </form> 
+                            <!-- Display the number of Likes for the Show -->
                             <p>{{ show.like.count }}</p> 
                         </div>
-
+                        <!--Display the Show Title and Description-->
                         <a class="text-decoration-none" href="{% url 'showShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
                         <p class="card-text">{{show.description}}</p>    
                     
@@ -43,4 +47,5 @@
         </div>
     </div>           
 {%  endfor %}  
+
 {% endblock %}

@@ -2,6 +2,7 @@
 {% block content %}
 {% include 'navbar.html' %}
 {% include 'hero.html' %}
+
 <div class="container mt-4 mb-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -9,6 +10,7 @@
                 <div class="card-header">
                     <strong>Update Image</strong>
                 </div>
+                <!-- Update Image Form -->
                 <form class="m-3" method="POST" action="" enctype="multipart/form-data">
                     {% csrf_token %}
 
@@ -16,9 +18,11 @@
 
                     <button class="btn btn-secondary" type="submit">Update</button>
                 </form>
+                <!-- Update User Link -->
                 <a class="m-3 text-dark" href="{% url 'updateUser' user.id %}">Update Info</a>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

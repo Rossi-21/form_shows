@@ -4,14 +4,19 @@
 <div class="container mt-5">
     <div class="d-flex align-items-center justify-content-between">
         <h1>Login</h1>
+        <!-- Link to the registration page -->
         <a href="{% url 'registerUser' %}">Register</a>
     </div>
     <div class="form-group">
+        <!-- Login Form -->
         <form action="" method="POST">
+            <!-- Dispaly Error messages -->
             {% for message in messages %}
                 <p class="text-danger">{{message}}</p>
             {% endfor %}
+
             {% csrf_token %}
+
             <label class="form-label" for="username">Username:</label>
             <input class="form-control" type="text" name="username" id="username">
             <label class="from-label" for="password">Password:</label>
@@ -21,5 +26,4 @@
     </div>
 </div>
 
-    
 {% endblock %}

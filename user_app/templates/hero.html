@@ -1,7 +1,10 @@
 <div class="jumbotron text-center">
+    <!-- Link to the Dashboard -->
     <a class="text-decoration-none text-dark" href="{% url  'dashboard'%}"><h1 class="display-4">TV Party</h1></a>
+    <!-- Dispaly the json response from ChatGPT API if avalible -->
     {% if data %}
         <p class="lead">{{ data.choices.0.message.content }}</p>
+    <!-- If ChatGPT respones is not avalible display this text -->
     {% else %}
         <p class="lead">Let's Have a TV Party Tonight!</p>
     {% endif %}

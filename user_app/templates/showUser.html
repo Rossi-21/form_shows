@@ -2,6 +2,7 @@
 {% block content %}
 {% include 'navbar.html' %}
 {% include 'hero.html' %}
+
 <div class="container mt-4">
     <div class="row">
         <!-- Column for user's followers and follow/unfollow button -->
@@ -39,6 +40,7 @@
                     <div class="col-md-10">
                         <div class="card shadow-lg mb-4">
                             <div class="card-header d-flex align-items-center">
+                                <!-- Username and Profile Image if avalible -->
                                 <div class="d-flex">
                                     {% if show.user.profile.profile_image %}
                                         <img class="rounded-circle profile_image" src="{{show.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
@@ -46,13 +48,16 @@
                                     <a class="nav-link text-dark" href="/user/{{show.user.id}}">{{show.user}}</a>
                                 </div>
                             </div>
+                            <!-- Show Image if avalible -->
                             {% if show.show_image %}
                                 <a href="{% url 'showShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
                             {% endif %}
                             <div class="card-body">
                                 <div class="d-flex">
+                                    <!-- Like functionality -->
                                     <form class="like-form" action="{% url 'likeShow' show.id %}" method="POST">
                                         {% csrf_token %}
+
                                         <button type="submit" class="like-button" data-show-id="{{ show.id }}">
                                             {% if user in show.like.all %} 
                                                 <img id="image_{{ show.id }}" class="like-button" src="/static/images/liked.png"alt="Like">
@@ -62,11 +67,13 @@
                                         </button> 
                                     </form> 
                                     <p>{{ show.like.count }}</p> 
+                                    <!-- If the User created the show allow them to edit or delete it -->
                                     {% if request.user == show.user %}
                                     <span><a class="margin-left" href="/shows/{{show.id}}/edit"><img src="/static/images/edit.png" alt=""></a></span>  
                                         <a href="/shows/{{show.id}}/delete"><img src="/static/images/delete.png" alt=""></a>
                                     {% endif %}
                                 </div>
+                                <!-- Show Title and Description -->
                                 <a class="text-decoration-none" href="{% url 'showShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
                                 <p class="card-text">{{show.description}}</p>    
                             </div>
@@ -75,6 +82,7 @@
                 </div>
             {% endfor %}
         </div>
+        <!-- User Favaorites -->
         <div class="col-md-3">
             <div class="card mb-4">
                 <div class="card-header">
@@ -91,4 +99,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

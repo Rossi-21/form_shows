@@ -2,12 +2,14 @@
 {% block content %}
 {% include 'navbar.html' %}
 {% include 'hero.html' %}
+
 <div class="container mt-4 mb-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <!-- Show Card-->
             <div class="card shadow-lg mb-4">
                 <div class="card-header d-flex align-items-center">
+                    <!-- Display Username and Profile image if avalible -->
                     <div class="d-flex">
                         {% if show.user.profile.profile_image %}
                             <img class="rounded-circle profile_image" src="{{show.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
@@ -15,9 +17,11 @@
                         <a class="nav-link text-dark" href="/user/{{show.user.id}}">{{show.user}}</a>
                     </div>
                 </div>
+                <!-- Dispaly Show image if avalibel -->
                 {% if show.show_image %}
                     <a href="{% url 'showShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
                 {% endif %}
+                <!-- Display Show Details -->
                 <div class="card-body position-relative">
                     <h2 class="card-title">{{ show.title }}</h2>
                     <p class="card-text"><strong>Network: </strong>{{ show.network }}</p>
@@ -25,6 +29,7 @@
                     <p class="card-text"><strong>Description: </strong>{{ show.description }}</p>
                     <p class="card-text"><strong>Likes: </strong>{{ show.like.count }}</p>
                     <div class="d-flex flex-column">
+                        <!-- If the current User created the show display links to Edit and Delete the Show -->
                         {% if request.user == show.user %}
                             <a href="/shows/{{ show.id }}/edit" class="btn btn-primary m-3">Edit</a>
                             <a href="/shows/{{ show.id }}/delete" class="btn btn-danger m-3">Delete</a>
@@ -35,31 +40,36 @@
             <!-- Comment Card -->
             <div class="card shadow-lg mb-4">
                 <div class="card-body">
+                    <!-- Comment Form -->
                     <form class="form-group" action="" method="POST">
-                        {% csrf_token %}
+                        {% csrf_token %} 
+
                         <div class="form-group">
                             <label for="description"><strong>Comment:</strong></label>
                             <textarea class="form-control" name="description" cols="15" rows="5"></textarea>
                         </div>
                         <button class="btn btn-secondary mt-3" type="submit">Comment</button>
                     </form>
+                    <!-- Dispaly all Comments associated with the Show -->
                     {% for comment in comments %}
                         <div class="media mt-3">
                             <div class="media-body">
                                 <div class="d-flex">
                                     <div class="d-flex">
+                                        <!-- Dispaly the Username and Profile image if avalible -->
                                         {% if show.user.profile.profile_image %}
                                             <img class="rounded-circle profile_image" src="{{comment.user.profile.profile_image.url}}"  alt="profile image" height="35" width="35">
                                         {% endif %}
                                         <h5><a class="nav-link text-dark" href="/user/{{comment.user.id}}">{{show.user}}</a></h5>
                                     </div>
+                                    <!-- If the current User created the comment, allow them to delete it -->
                                     {% if request.user == comment.user %}
                                         <a class="margin-left" href="{% url 'deleteComment' comment.id %}">
                                             <img src="/static/images/delete.png" alt="Delete">
                                         </a>
                                     {% endif %}
                                 </div>
-                                
+                                <!-- Display the Comment -->
                                 <p>{{ comment.description }}</p>
                             </div>
                         </div>
@@ -69,4 +79,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
