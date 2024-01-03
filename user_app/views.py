@@ -40,7 +40,7 @@ def registerUser(request):
 
             send_mail(subject, plain_message, from_email, to, html_message=html_message )
 
-            #Rredirect them to the dashboard
+            #Redirect them to the dashboard
             return redirect('dashboard')
     
     context = {
