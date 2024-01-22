@@ -23,21 +23,7 @@
                         <a href="{% url 'showShow' show.id %}"><img src="{{show.show_image.url}}" class="card-img-top fixed-image-size" alt="show image"></a>
                     {% endif %}
                     <div class="card-body">
-                        <!-- Like Button Functionality -->
-                        <div id="like-button" class="d-flex">
-                            <form class="like-form" action="{% url 'likeShow' show.id %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="like-button" data-show-id="{{ show.id }}">
-                                    {% if user in show.like.all %} 
-                                        <img id="image_{{ show.id }}" class="like-button" src="/static/images/liked.png"alt="Like">
-                                    {% else %} 
-                                        <img id="image_{{ show.id }}" class="like-button" src="/static/images/favorite.png"alt="Like">
-                                    {% endif %} 
-                                </button> 
-                            </form> 
-                            <!-- Display the number of Likes for the Show -->
-                            <p>{{ show.like.count }}</p> 
-                        </div>
+                        {% include 'snippets/likes.html' %}
                         <!--Display the Show Title and Description-->
                         <a class="text-decoration-none" href="{% url 'showShow' show.id %}"><h5 class="card-title text-dark">{{show.title}}</h5></a>
                         <p class="card-text">{{show.description}}</p>    

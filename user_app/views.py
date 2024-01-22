@@ -304,7 +304,7 @@ def likeShow(request, id):
             # Delete the Users Like from the database
             show.like.remove(request.user)
     # Send the User to the Dashboard page
-    return redirect('dashboard')
+    return render(request, 'snippets/likes.html')
 
 # Update Show Method
 @login_required
