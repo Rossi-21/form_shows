@@ -291,20 +291,22 @@ def dashboard(request):
 # Like shows method
 @login_required
 def likeShow(request, id):
+
+    # Get the show by id
+    show = Show.objects.get(id=id)
+    user_exist = show.like.filter(username=request.user.username).exists()
     
-    if request.method =="POST":
-        # Get the show by id
-        show = Show.objects.get(id=id)
-        # If the User does not Like the show allow them to Like it
-        if request.user not in show.like.all():
-            # Add the Users Like to the database
-            show.like.add(request.user)
-        # If the User dose Like the Show allow them to unLike it
-        else:
-            # Delete the Users Like from the database
-            show.like.remove(request.user)
-    # Send the User to the Dashboard page
-    return render(request, 'snippets/likes.html')
+    if user_exist:
+        show.like.remove(request.user)
+    else:
+        show.like.add(request.user)
+        
+    context = {
+        'show' : show
+    }
+    
+    # Render just the likes portion of the page
+    return render(request, 'snippets/likes.html', context)
 
 # Update Show Method
 @login_required

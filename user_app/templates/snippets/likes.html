@@ -1,18 +1,15 @@
 <!-- Like Button Functionality -->
 <div id="like-button-{{ show.id }}" class="d-flex">
-    <form class="like-form" action="{% url 'likeShow' show.id %}" method="POST" 
+    <a class="pe-auto"
     hx-post="{% url 'likeShow' show.id %}"
     hx-target="#like-button-{{ show.id }}"
-    hx-swap="outerHTML">
-        {% csrf_token %}
-        <button type="submit" class="like-button" data-show-id="{{ show.id }}">
-            {% if user in show.like.all %} 
-                <img id="image_{{ show.id }}" class="like-button" src="/static/images/liked.png" alt="Like">
-            {% else %} 
-                <img id="image_{{ show.id }}" class="like-button" src="/static/images/favorite.png" alt="Like">
-            {% endif %} 
-        </button> 
-    </form> 
+    hx-swap="innerHTML">
+        {% if user in show.like.all %} 
+            <img id="image_{{ show.id }}" class="like-button" src="/static/images/liked.png" alt="Like">
+        {% else %} 
+            <img id="image_{{ show.id }}" class="like-button" src="/static/images/favorite.png" alt="Like">
+        {% endif %} 
+    </a>
     <!-- Display the number of Likes for the Show -->
     <p>{{ show.like.count }}</p> 
 </div>
